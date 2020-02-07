@@ -45,7 +45,7 @@
         android:backgroundTint="@color/color_botones"
         app:layout_anchor="@id/app_bar"
         app:layout_anchorGravity="bottom|end"
-        android:icon="@drawable/unomas"
+        android:src="@drawable/unomas"
         app:showAsAction="always"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

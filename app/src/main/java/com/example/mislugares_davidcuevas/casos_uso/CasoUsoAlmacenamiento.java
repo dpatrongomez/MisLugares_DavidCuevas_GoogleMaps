@@ -26,10 +26,6 @@ public class CasoUsoAlmacenamiento implements ActivityCompat.OnRequestPermission
                 "Necesita permisos de almacenamiento para añadir fotografías",1);
         solicitarPermiso(Manifest.permission.WRITE_EXTERNAL_STORAGE,
                 "Necesita permisos de almacenamiento para añadir fotografías",2);
-        solicitarPermiso(Manifest.permission.ACCESS_FINE_LOCATION,
-                "Necesita permisos de ubicació",3);
-
-
     }
 
 

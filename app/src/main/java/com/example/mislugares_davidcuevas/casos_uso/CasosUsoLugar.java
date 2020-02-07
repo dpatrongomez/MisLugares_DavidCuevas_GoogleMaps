@@ -197,16 +197,16 @@ public class CasosUsoLugar {
     }
 
     public void nuevo() {
-        int id = lugares.nuevo();
+        int pos = lugares.nuevo();
         GeoPunto posicion = ((Aplicacion) actividad.getApplication())
                 .posicionActual;
         if (!posicion.equals(GeoPunto.SIN_POSICION)) {
-            Lugar lugar = lugares.elemento(id);
+            Lugar lugar = lugares.elemento(pos);
             lugar.setPosicion(posicion);
-            lugares.actualiza(id, lugar);
+            lugares.actualiza(pos, lugar);
         }
         Intent i = new Intent(actividad, EdicionLugarActivity.class);
-        i.putExtra("_id", id);
+        i.putExtra("pos", pos);
         actividad.startActivity(i);
     }
 }

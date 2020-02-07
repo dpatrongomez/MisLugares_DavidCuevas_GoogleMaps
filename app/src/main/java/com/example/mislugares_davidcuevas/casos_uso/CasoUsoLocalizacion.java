@@ -11,6 +11,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
 
@@ -20,7 +21,7 @@ import com.example.mislugares_davidcuevas.presentacion.Aplicacion;
 
 import static android.content.Context.LOCATION_SERVICE;
 
-public class CasoUsoLocalizacion implements LocationListener {
+public class CasoUsoLocalizacion implements LocationListener, ActivityCompat.OnRequestPermissionsResultCallback {
     private static final String TAG = "MisLugares";
     private Activity actividad;
     private int codigoPermiso;
@@ -40,6 +41,8 @@ public class CasoUsoLocalizacion implements LocationListener {
                 .posicionActual;
         adaptador = ((Aplicacion) actividad.getApplication()).adaptador;
         ultimaLocalizazion();
+        solicitarPermiso(Manifest.permission.ACCESS_FINE_LOCATION,
+                "Necesita permisos de localizacion",3, actividad);
     }
 
     public boolean hayPermisoLocalizacion() {
@@ -145,5 +148,12 @@ public class CasoUsoLocalizacion implements LocationListener {
 
     public void desactivar() {
         if (hayPermisoLocalizacion()) manejadorLoc.removeUpdates(this);
+    }
+
+    @Override public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        if (requestCode == codigoPermiso
+                && grantResults.length == 1
+                && grantResults[0] == PackageManager.PERMISSION_GRANTED)
+            Toast.makeText(this.actividad, "Permiso de localización concedido",Toast.LENGTH_LONG).show();
     }
 }

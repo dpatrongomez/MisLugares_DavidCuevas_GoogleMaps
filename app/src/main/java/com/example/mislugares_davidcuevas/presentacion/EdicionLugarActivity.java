@@ -13,7 +13,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.example.mislugares_davidcuevas.R;
-import com.example.mislugares_davidcuevas.adaptadores.AdaptadorLugares;
 import com.example.mislugares_davidcuevas.casos_uso.CasosUsoLugar;
 import com.example.mislugares_davidcuevas.modelo.Lugar;
 import com.example.mislugares_davidcuevas.modelo.RepositorioLugares;
@@ -36,11 +35,11 @@ public class EdicionLugarActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         Bundle extras = getIntent().getExtras();
-        pos = extras.getInt("pos", 1);
+        pos = extras.getInt("pos", 0);
         lugares = ((Aplicacion) getApplication()).lugares;
         usoLugar = new CasosUsoLugar(this, lugares);
         lugar = lugares.elemento(pos);
-        actualizaVistas(pos);
+        actualizaVistas();
 
         tipo = findViewById(R.id.tipoSpinner);
         ArrayAdapter<String> adaptador = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, TipoLugar.getNombres());
@@ -50,7 +49,7 @@ public class EdicionLugarActivity extends AppCompatActivity {
 
     }
 
-    public void actualizaVistas(int pos) {
+    public void actualizaVistas() {
         nombre = findViewById(R.id.nombree);
         nombre.setText(lugar.getNombre());
 

@@ -118,6 +118,7 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.action_settings) {
+            LanzarAcercaDe();
             return true;
         }
         if (id == R.id.menu_buscar) {
