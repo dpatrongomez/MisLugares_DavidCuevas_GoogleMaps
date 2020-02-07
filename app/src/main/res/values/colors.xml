@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#1976d2</color>
+    <color name="colorPrimaryDark">#D8D8D8</color>
+    <color name="colorAccent">#4AF0D7</color>
+    <color name="colorSecondary">#81d4fa</color>
+    <color name="colorError">@android:color/holo_orange_dark</color>
+    <color name="colorBackground">#2196f3</color>
+    <color name="colorBackgroundText">#FFFFFF</color>
+    <color name="colorHintText">@android:color/darker_gray</color>
+    <color name="edittexttextcolor">@android:color/black</color>
+    <color name="edittextbackground">#3D5059</color>
+    <color name="color_botones">#aab6fe</color>
+
+</resources>

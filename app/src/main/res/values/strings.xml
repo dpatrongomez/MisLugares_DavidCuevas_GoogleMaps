@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">Mis Lugares</string>
+    <string name="large_text"></string>
+    <string name="action_settings">Ajustes</string>
+    <string name="title_activity_maps">Map</string>
+</resources>

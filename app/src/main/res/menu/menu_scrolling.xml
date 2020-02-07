@@ -1,0 +1,32 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.mislugares_davidcuevas.presentacion.MainActivity">
+    <item
+        android:id="@+id/menu_acercaDe"
+        android:icon="@drawable/acercade_icono"
+        android:orderInCategory="30"
+        android:title="Acerca de"
+        app:showAsAction="ifRoom|collapseActionView" />
+    <item
+        android:id="@+id/action_settings"
+        android:orderInCategory="100"
+        android:title="@string/action_settings"
+        app:showAsAction="never" />
+    <item android:title="Buscart"
+        android:id="@+id/menu_buscar"
+        android:icon="@android:drawable/ic_menu_search"
+        android:orderInCategory="50"
+        app:showAsAction="always|collapseActionView"/>
+    <item android:title="Preferencias"
+        android:id="@+id/menu_preferencias"
+        android:icon="@drawable/preferencias_icono"
+        android:orderInCategory="5"
+        app:showAsAction="ifRoom|withText"/>
+    <item android:title="Mapa"
+        android:id="@+id/menu_mapa"
+        android:icon="@drawable/ic_place_black_24dp"
+        android:orderInCategory="100"
+        app:showAsAction="always"/>
+
+</menu>
