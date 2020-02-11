@@ -9,7 +9,7 @@ public class LugaresLista implements RepositorioLugares {
 
     public LugaresLista() {
         listaLugares = new ArrayList<Lugar>();
-        añadeEjemplos();
+        aniadeEjemplos();
 
     }
 
@@ -39,7 +39,7 @@ public class LugaresLista implements RepositorioLugares {
         listaLugares.set(id, lugar);
     }
 
-    public void añadeEjemplos() {
+    public void aniadeEjemplos() {
         aniade(new Lugar("Escuela Politécnica Superior de Gandía",
                 "C/ Paranimf, 1 46730 Gandia (SPAIN)", -0.166093, 38.995656,
                 TipoLugar.EDUCACION, 962849300, "http://www.epsg.upv.es",
