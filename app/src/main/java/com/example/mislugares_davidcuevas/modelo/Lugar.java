@@ -128,6 +128,4 @@ public class Lugar {
                 ", tipo=" + tipo +
                 '}';
     }
-
-
 }

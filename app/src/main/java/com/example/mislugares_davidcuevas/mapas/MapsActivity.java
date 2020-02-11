@@ -10,6 +10,7 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import com.example.mislugares_davidcuevas.R;
+import com.example.mislugares_davidcuevas.adaptadores.AdaptadorLugaresBD;
 import com.example.mislugares_davidcuevas.modelo.GeoPunto;
 import com.example.mislugares_davidcuevas.modelo.Lugar;
 import com.example.mislugares_davidcuevas.modelo.RepositorioLugares;
@@ -27,13 +28,13 @@ import com.google.android.gms.maps.model.MarkerOptions;
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener {
 
     private GoogleMap maps;
-    private RepositorioLugares lugares;
+    private AdaptadorLugaresBD adaptador;
 
 
     @Override public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mapa);
-        lugares = ((Aplicacion) getApplication()).lugares;
+        adaptador = ((Aplicacion) getApplication()).adaptador;
         SupportMapFragment mapFragment = (SupportMapFragment)
                 getSupportFragmentManager().findFragmentById(R.id.mapa);
         mapFragment.getMapAsync(this);
@@ -50,13 +51,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             maps.getUiSettings().setZoomControlsEnabled(true);
             maps.getUiSettings().setCompassEnabled(true);
         }
-        if (lugares.tamanyo() > 0) {
-            GeoPunto p = lugares.elemento(0).getPosicion();
+        if (adaptador.getItemCount() > 0) {
+            GeoPunto p = adaptador.lugarPosicion(0).getPosicion();
             maps.moveCamera(CameraUpdateFactory.newLatLngZoom(
                     new LatLng(p.getLatitud(), p.getLongitud()), 12));
         }
-        for (int n=0; n<lugares.tamanyo(); n++) {
-            Lugar lugar = lugares.elemento(n);
+        for (int n=0; n<adaptador.getItemCount(); n++) {
+            Lugar lugar = adaptador.lugarPosicion(n);
             GeoPunto p = lugar.getPosicion();
             if (p != null && p.getLatitud() != 0) {
 
@@ -75,8 +76,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public void onInfoWindowClick(Marker marker) {
-        for (int id=0; id<lugares.tamanyo(); id++){
-            if (lugares.elemento(id).getNombre()
+        for (int id=0; id<adaptador.getItemCount(); id++){
+            if (adaptador.lugarPosicion(id).getNombre()
                     .equals(marker.getTitle())){
                 Intent intent = new Intent(this, VistaLugarActivity.class);
                 intent.putExtra("pos", id);

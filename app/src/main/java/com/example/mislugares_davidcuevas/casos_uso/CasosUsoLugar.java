@@ -18,6 +18,8 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.FileProvider;
 
 import com.example.mislugares_davidcuevas.adaptadores.AdaptadorLugares;
+import com.example.mislugares_davidcuevas.adaptadores.AdaptadorLugaresBD;
+import com.example.mislugares_davidcuevas.datos.LugaresBD;
 import com.example.mislugares_davidcuevas.modelo.GeoPunto;
 import com.example.mislugares_davidcuevas.modelo.Lugar;
 import com.example.mislugares_davidcuevas.modelo.RepositorioLugares;
@@ -35,12 +37,14 @@ import static com.example.mislugares_davidcuevas.presentacion.VistaLugarActivity
 
 public class CasosUsoLugar {
     private Activity actividad;
-    private RepositorioLugares lugares;
+    private LugaresBD lugares;
+    private AdaptadorLugaresBD adaptador;
 
 
-    public CasosUsoLugar(Activity actividad, RepositorioLugares lugares) {
+    public CasosUsoLugar(Activity actividad, LugaresBD lugares, AdaptadorLugaresBD adaptador) {
         this.actividad = actividad;
         this.lugares = lugares;
+        this.adaptador = adaptador;
     }
 
 
@@ -59,6 +63,8 @@ public class CasosUsoLugar {
                 .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         lugares.borrar(id);
+                        adaptador.setCursor(lugares.extraeCursor());
+                        adaptador.notifyDataSetChanged();
                         actividad.finish();
 
                     }
@@ -75,10 +81,14 @@ public class CasosUsoLugar {
 
     public void guardar(int id, Lugar nuevoLugar) {
         lugares.actualiza(id, nuevoLugar);
-
-
+        adaptador.setCursor(lugares.extraeCursor());
+        adaptador.notifyDataSetChanged();
     }
 
+    public void actualizaPosLugar(int pos, Lugar lugar) {
+        int id = adaptador.idPosicion(pos);
+        guardar(id, lugar);  //
+    }
 
     public void compartir(Lugar lugar) {
         Intent i = new Intent(Intent.ACTION_SEND);
@@ -116,6 +126,7 @@ public class CasosUsoLugar {
         Lugar lugar = lugares.elemento(pos);
         lugar.setFoto(uri);
         visualizarFoto(lugar, imageView);
+        actualizaPosLugar(pos, lugar);
     }
 
 
@@ -197,16 +208,16 @@ public class CasosUsoLugar {
     }
 
     public void nuevo() {
-        int pos = lugares.nuevo();
+        int id = lugares.nuevo();
         GeoPunto posicion = ((Aplicacion) actividad.getApplication())
                 .posicionActual;
         if (!posicion.equals(GeoPunto.SIN_POSICION)) {
-            Lugar lugar = lugares.elemento(pos);
+            Lugar lugar = lugares.elemento(id);
             lugar.setPosicion(posicion);
-            lugares.actualiza(pos, lugar);
+            lugares.actualiza(id, lugar);
         }
         Intent i = new Intent(actividad, EdicionLugarActivity.class);
-        i.putExtra("pos", pos);
+        i.putExtra("_id", id);
         actividad.startActivity(i);
     }
 }

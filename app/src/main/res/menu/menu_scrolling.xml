@@ -18,11 +18,6 @@
         android:icon="@android:drawable/ic_menu_search"
         android:orderInCategory="50"
         app:showAsAction="always|collapseActionView"/>
-    <item android:title="Preferencias"
-        android:id="@+id/menu_preferencias"
-        android:icon="@drawable/preferencias_icono"
-        android:orderInCategory="5"
-        app:showAsAction="ifRoom|withText"/>
     <item android:title="Mapa"
         android:id="@+id/menu_mapa"
         android:icon="@drawable/ic_place_black_24dp"

@@ -6,7 +6,8 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:showIn="@layout/activity_main"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" tools:context="com.example.mislugares_davidcuevas.presentacion.MainActivity"
+    android:layout_height="match_parent"
+    tools:context="com.example.mislugares_davidcuevas.presentacion.MainActivity"
     android:theme="@style/Theme.AppCompat.NoActionBar"
     android:padding="24dp"
     android:background="@color/colorPrimary">

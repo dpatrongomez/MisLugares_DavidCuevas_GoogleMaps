@@ -19,8 +19,10 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.example.mislugares_davidcuevas.R;
 import com.example.mislugares_davidcuevas.adaptadores.AdaptadorLugares;
+import com.example.mislugares_davidcuevas.adaptadores.AdaptadorLugaresBD;
 import com.example.mislugares_davidcuevas.casos_uso.CasoUsoAlmacenamiento;
 import com.example.mislugares_davidcuevas.casos_uso.CasosUsoLugar;
+import com.example.mislugares_davidcuevas.datos.LugaresBD;
 import com.example.mislugares_davidcuevas.modelo.Lugar;
 import com.example.mislugares_davidcuevas.modelo.RepositorioLugares;
 
@@ -29,7 +31,8 @@ import java.util.Date;
 
 
 public class VistaLugarActivity extends AppCompatActivity {
-    private RepositorioLugares lugares;
+    private LugaresBD lugares;
+    private AdaptadorLugaresBD adaptador;
     private CasosUsoLugar usoLugar;
     private int pos;
     private Lugar lugar;
@@ -41,21 +44,40 @@ public class VistaLugarActivity extends AppCompatActivity {
     private CasoUsoAlmacenamiento usoAlmacenamiento;
     private Uri uriUltimaFoto;
     final static int RESULTADO_EDITAR = 1;
+    public int _id;
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.vista_lugar);
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
+        adaptador = ((Aplicacion) getApplication()).adaptador;
+
         Bundle extras = getIntent().getExtras();
-        pos = extras.getInt("pos", 0);
+        pos = extras.getInt("pos", -1) ;
+        _id = extras.getInt("_id",-1);
+        if (_id!=-1){
+            lugar = lugares.elemento(_id);
+        }
+        else{
+            lugar = adaptador.lugarPosicion(pos);
+        }
         lugares = ((Aplicacion) getApplication()).lugares;
-        usoLugar = new CasosUsoLugar(this, lugares);
-        lugar = lugares.elemento(pos);
+        lugares.actualiza(_id,lugar);
+        usoLugar = new CasosUsoLugar(this, lugares, adaptador);
+        lugar = adaptador.lugarPosicion (pos);
         foto = (ImageView) findViewById(R.id.foto);
-        actualizaVistas(pos);
+        actualizaVistas();
         setSupportActionBar(toolbar);
         inicializarListener();
         usoAlmacenamiento = new CasoUsoAlmacenamiento(this, MY_WRITE_REQUEST_CODE);
+
+        if (extras != null) {
+            pos = extras.getInt("pos", 0);
+        }
+        else  {
+            pos = 0;
+        }
+        _id = adaptador.idPosicion(pos);
 
         if (lugar.getTelefono() == 0) {
             findViewById(R.id.telefono).setVisibility(View.GONE);
@@ -86,7 +108,8 @@ public class VistaLugarActivity extends AppCompatActivity {
                 return true;
 
             case R.id.accion_borrar:
-                usoLugar.borrar(pos);
+                int _id = adaptador.idPosicion(pos);
+                usoLugar.borrar(_id);
                 return true;
 
             default:
@@ -94,7 +117,7 @@ public class VistaLugarActivity extends AppCompatActivity {
         }
     }
 
-    public void actualizaVistas(int pos) {
+    public void actualizaVistas() {
         TextView nombre = findViewById(R.id.nombre);
         nombre.setText(lugar.getNombre());
         ImageView logo_tipo = findViewById(R.id.logo_tipo);
@@ -121,6 +144,8 @@ public class VistaLugarActivity extends AppCompatActivity {
         new RatingBar.OnRatingBarChangeListener() {
             @Override public void onRatingChanged(RatingBar ratingBar, float valor, boolean fromUser) {
                 lugar.setValoracion(valor);
+                usoLugar.actualizaPosLugar(pos, lugar);
+                pos = adaptador.posicionId(_id);
             }
         });
         usoLugar.visualizarFoto(lugar, foto);
@@ -193,9 +218,10 @@ public class VistaLugarActivity extends AppCompatActivity {
     @Override protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == RESULTADO_EDITAR) {
-            actualizaVistas(pos);
-            findViewById(R.id.scrollView1).invalidate();
-        } else if (requestCode == RESULTADO_GALERIA) {
+            lugar = lugares.elemento(_id);
+            pos = adaptador.posicionId(_id);
+            actualizaVistas();
+        }else if (requestCode == RESULTADO_GALERIA) {
             if (resultCode == Activity.RESULT_OK) {
                 usoLugar.ponerFoto(pos, data.getDataString(), foto);
             } else {

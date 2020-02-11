@@ -13,19 +13,23 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.example.mislugares_davidcuevas.R;
+import com.example.mislugares_davidcuevas.adaptadores.AdaptadorLugaresBD;
 import com.example.mislugares_davidcuevas.casos_uso.CasosUsoLugar;
+import com.example.mislugares_davidcuevas.datos.LugaresBD;
 import com.example.mislugares_davidcuevas.modelo.Lugar;
 import com.example.mislugares_davidcuevas.modelo.RepositorioLugares;
 import com.example.mislugares_davidcuevas.modelo.TipoLugar;
 
 
 public class EdicionLugarActivity extends AppCompatActivity {
-    private RepositorioLugares lugares;
+    private LugaresBD lugares;
+    private AdaptadorLugaresBD adaptador;
     private CasosUsoLugar usoLugar;
     private int pos;
     private Lugar lugar;
     private EditText nombre, direccion, telefono, url, comentario;
     private Spinner tipo;
+    private int _id;
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,20 +37,17 @@ public class EdicionLugarActivity extends AppCompatActivity {
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        adaptador = ((Aplicacion) getApplication()).adaptador;
+        lugares = ((Aplicacion) getApplication()).lugares;
+        usoLugar = new CasosUsoLugar(this, lugares, adaptador);
 
         Bundle extras = getIntent().getExtras();
-        pos = extras.getInt("pos", 0);
-        lugares = ((Aplicacion) getApplication()).lugares;
-        usoLugar = new CasosUsoLugar(this, lugares);
-        lugar = lugares.elemento(pos);
+        pos = extras.getInt("pos", -1);
+        _id = extras.getInt("_id", -1);
+        if (_id!=-1) lugar = lugares.elemento(_id);
+        else         lugar = adaptador.lugarPosicion (pos);
+
         actualizaVistas();
-
-        tipo = findViewById(R.id.tipoSpinner);
-        ArrayAdapter<String> adaptador = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, TipoLugar.getNombres());
-        adaptador.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        tipo.setAdapter(adaptador);
-        tipo.setSelection(lugar.getTipo().ordinal());
-
     }
 
     public void actualizaVistas() {
@@ -61,8 +62,13 @@ public class EdicionLugarActivity extends AppCompatActivity {
         url.setText(lugar.getUrl());
         comentario = findViewById(R.id.comentarioe);
         comentario.setText(lugar.getComentario());
-
+        tipo = findViewById(R.id.tipoSpinner);
+        ArrayAdapter<String> adaptador = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, TipoLugar.getNombres());
+        adaptador.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        tipo.setAdapter(adaptador);
+        tipo.setSelection(lugar.getTipo().ordinal());
     }
+
     public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.edicion_lugar, menu);
         return true;
@@ -71,6 +77,7 @@ public class EdicionLugarActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.cancelar:
+                if (_id!=-1) lugares.borrar(_id);
                 finish();
                 return true;
             case R.id.guardar:
@@ -80,28 +87,15 @@ public class EdicionLugarActivity extends AppCompatActivity {
                 lugar.setTelefono(Integer.parseInt(telefono.getText().toString()));
                 lugar.setUrl(url.getText().toString());
                 lugar.setComentario(comentario.getText().toString());
-
-                lanzarGuardado();
-
+                if (_id==-1) _id = adaptador.idPosicion(pos);
+                usoLugar.guardar(_id, lugar);
+                finish();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
-    public void lanzarGuardado(){
-        new AlertDialog.Builder(this)
-                .setTitle("Guardar Lugar")
-                .setMessage("¿Desea guardar los cambios?")
-                .setPositiveButton("Confirmar", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                        usoLugar.guardar(pos,lugar);
-                        finish();
-                    }
-                })
-                .setNegativeButton("Cancelar", null)
-                .show();
 
-    }
 }
 
 

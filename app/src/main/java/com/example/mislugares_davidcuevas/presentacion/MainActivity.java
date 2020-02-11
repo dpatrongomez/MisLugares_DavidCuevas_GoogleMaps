@@ -5,7 +5,6 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -16,28 +15,30 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.mislugares_davidcuevas.R;
 import com.example.mislugares_davidcuevas.adaptadores.AdaptadorLugares;
+import com.example.mislugares_davidcuevas.adaptadores.AdaptadorLugaresBD;
 import com.example.mislugares_davidcuevas.casos_uso.CasoUsoAlmacenamiento;
 import com.example.mislugares_davidcuevas.casos_uso.CasoUsoLocalizacion;
 import com.example.mislugares_davidcuevas.casos_uso.CasosUsoLugar;
+import com.example.mislugares_davidcuevas.datos.LugaresBD;
 import com.example.mislugares_davidcuevas.mapas.MapsActivity;
 import com.example.mislugares_davidcuevas.modelo.RepositorioLugares;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
 public class MainActivity extends AppCompatActivity {
-    private RepositorioLugares lugares;
+    private LugaresBD lugares;
+    private AdaptadorLugaresBD adaptador;
+
     private CasosUsoLugar usoLugar;
     private MenuItem preferencias;
     private CasoUsoAlmacenamiento usoAlmacenamiento;
     private RecyclerView recyclerView;
-    public AdaptadorLugares adaptador;
-    //private static final int MY_UBICATION_REQUEST_CODE = 3;
+    static final int RESULTADO_PREFERENCIAS = 0;
     private static final int SOLICITUD_PERMISO_LOCALIZACION = 1;
     private CasoUsoLocalizacion usoLocalizacion;
 
@@ -46,20 +47,26 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
-
+        adaptador = ((Aplicacion) getApplication()).adaptador;
         lugares = ((Aplicacion) getApplication()).lugares;
-        usoLugar = new CasosUsoLugar(this, lugares);
+        usoLugar = new CasosUsoLugar(this, lugares, adaptador);
+        usoLocalizacion = new CasoUsoLocalizacion(this,
+                SOLICITUD_PERMISO_LOCALIZACION);
         setSupportActionBar(toolbar);
-        adaptador = ((Aplicacion) getApplication()).getAdaptador();
+
         inicializarReciclerView();
 
+        /*adaptador.setOnItemClickListener(new View.OnClickListener() {
+            @Override public void onClick(View v) {
+                int pos =(Integer)(v.getTag());
+                usoLugar.mostrar(pos);
+            }
+        });*/
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
                 usoLugar.nuevo();
             }
         });
@@ -101,8 +108,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        usoLocalizacion = new CasoUsoLocalizacion(this,
-                SOLICITUD_PERMISO_LOCALIZACION);
+
     }
 
 
@@ -118,17 +124,14 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.action_settings) {
-            LanzarAcercaDe();
+            LanzarPreferencias();
             return true;
         }
         if (id == R.id.menu_buscar) {
             lanzarVistaLugar();
             return true;
         }
-        if (id == R.id.menu_preferencias){
-            LanzarPreferencias();
-            return true;
-        }
+
         if (id == R.id.menu_acercaDe){
             LanzarAcercaDe();
             return  true;
@@ -141,8 +144,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void LanzarPreferencias(){
-        Intent preferencias = new Intent(MainActivity.this, PreferenciasActivity.class);
-        startActivity(preferencias);
+        Intent i = new Intent(this, PreferenciasActivity.class);
+        startActivityForResult(i, RESULTADO_PREFERENCIAS);
     }
 
     public void LanzarAcercaDe(){
@@ -194,6 +197,14 @@ public class MainActivity extends AppCompatActivity {
     @Override protected void onPause() {
         super.onPause();
         usoLocalizacion.desactivar();
+    }
+    @Override protected void onActivityResult(int requestCode, int resultCode,
+                                              Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == RESULTADO_PREFERENCIAS) {
+            adaptador.setCursor(lugares.extraeCursor());
+            adaptador.notifyDataSetChanged();
+        }
     }
 
 }

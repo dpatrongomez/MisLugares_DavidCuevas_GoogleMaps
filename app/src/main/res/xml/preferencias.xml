@@ -9,7 +9,7 @@
         android:summary="Notificar si estamos cerca de un lugar"/>
     <EditTextPreference
         android:key="maximo"
-        android:title="Máximo de lugaares a mostrar"
+        android:title="Máximo de lugares a mostrar"
         android:summary="Limita en número de valores que se muestran en la lista"
         android:inputType="number"
         android:defaultValue="12"/>
@@ -19,6 +19,6 @@
         android:summary="Que lugares quieres que aparezcan antes"
         android:entries="@array/tiposOrden"
         android:entryValues="@array/tiposOrdenValores"
-        android:defaultValue="1"/>
+        android:defaultValue="0"/>
 
 </PreferenceScreen>
