@@ -1,5 +1,6 @@
 package com.example.mislugares_davidcuevas.presentacion;
 
+import android.Manifest;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.Menu;
@@ -14,6 +15,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.example.mislugares_davidcuevas.R;
 import com.example.mislugares_davidcuevas.adaptadores.AdaptadorLugaresBD;
+import com.example.mislugares_davidcuevas.casos_uso.CasoUsoAlmacenamiento;
 import com.example.mislugares_davidcuevas.casos_uso.CasosUsoLugar;
 import com.example.mislugares_davidcuevas.datos.LugaresBD;
 import com.example.mislugares_davidcuevas.modelo.Lugar;
@@ -30,6 +32,8 @@ public class EdicionLugarActivity extends AppCompatActivity {
     private EditText nombre, direccion, telefono, url, comentario;
     private Spinner tipo;
     private int _id;
+
+
 
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +66,7 @@ public class EdicionLugarActivity extends AppCompatActivity {
         url.setText(lugar.getUrl());
         comentario = findViewById(R.id.comentarioe);
         comentario.setText(lugar.getComentario());
+
         tipo = findViewById(R.id.tipoSpinner);
         ArrayAdapter<String> adaptador = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, TipoLugar.getNombres());
         adaptador.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

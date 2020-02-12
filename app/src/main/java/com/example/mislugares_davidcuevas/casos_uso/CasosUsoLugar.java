@@ -17,12 +17,10 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.content.FileProvider;
 
-import com.example.mislugares_davidcuevas.adaptadores.AdaptadorLugares;
 import com.example.mislugares_davidcuevas.adaptadores.AdaptadorLugaresBD;
 import com.example.mislugares_davidcuevas.datos.LugaresBD;
 import com.example.mislugares_davidcuevas.modelo.GeoPunto;
 import com.example.mislugares_davidcuevas.modelo.Lugar;
-import com.example.mislugares_davidcuevas.modelo.RepositorioLugares;
 import com.example.mislugares_davidcuevas.presentacion.Aplicacion;
 import com.example.mislugares_davidcuevas.presentacion.EdicionLugarActivity;
 import com.example.mislugares_davidcuevas.presentacion.VistaLugarActivity;
@@ -83,6 +81,7 @@ public class CasosUsoLugar {
         lugares.actualiza(id, nuevoLugar);
         adaptador.setCursor(lugares.extraeCursor());
         adaptador.notifyDataSetChanged();
+        //Toast.makeText(actividad.getBaseContext(), "Guardado correctamente", Toast.LENGTH_SHORT).show();
     }
 
     public void actualizaPosLugar(int pos, Lugar lugar) {
@@ -123,7 +122,7 @@ public class CasosUsoLugar {
 
 
     public void ponerFoto(int pos, String uri, ImageView imageView) {
-        Lugar lugar = lugares.elemento(pos);
+        Lugar lugar = adaptador.lugarPosicion(pos);
         lugar.setFoto(uri);
         visualizarFoto(lugar, imageView);
         actualizaPosLugar(pos, lugar);

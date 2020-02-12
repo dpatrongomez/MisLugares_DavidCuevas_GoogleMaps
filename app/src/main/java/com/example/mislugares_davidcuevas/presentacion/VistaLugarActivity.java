@@ -18,13 +18,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.example.mislugares_davidcuevas.R;
-import com.example.mislugares_davidcuevas.adaptadores.AdaptadorLugares;
 import com.example.mislugares_davidcuevas.adaptadores.AdaptadorLugaresBD;
 import com.example.mislugares_davidcuevas.casos_uso.CasoUsoAlmacenamiento;
 import com.example.mislugares_davidcuevas.casos_uso.CasosUsoLugar;
 import com.example.mislugares_davidcuevas.datos.LugaresBD;
 import com.example.mislugares_davidcuevas.modelo.Lugar;
-import com.example.mislugares_davidcuevas.modelo.RepositorioLugares;
 
 import java.text.DateFormat;
 import java.util.Date;
@@ -192,15 +190,13 @@ public class VistaLugarActivity extends AppCompatActivity {
         camara.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                usoAlmacenamiento.solicitarPermiso(Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                        "Necesita permisos de almacenamiento para añadir fotografías",MY_READ_REQUEST_CODE);
 
-                if (usoAlmacenamiento.hayPermisoAlmacenamientoEscritura()) {
 
-                    uriUltimaFoto = usoLugar.tomarFoto(RESULTADO_FOTO);
-
+                if (!usoAlmacenamiento.hayPermisoAlmacenamientoEscritura()) {
+                uriUltimaFoto = usoLugar.tomarFoto(RESULTADO_FOTO);
                 }else {
                     Toast.makeText(getBaseContext(), "No hay permisos de almacenamiento, no se puede tomar la foto", Toast.LENGTH_LONG).show();
+                    usoAlmacenamiento = new CasoUsoAlmacenamiento(VistaLugarActivity.this, MY_WRITE_REQUEST_CODE);
                 }
             }
         });

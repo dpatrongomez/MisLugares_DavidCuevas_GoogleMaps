@@ -5,6 +5,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -19,23 +20,19 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.mislugares_davidcuevas.R;
-import com.example.mislugares_davidcuevas.adaptadores.AdaptadorLugares;
 import com.example.mislugares_davidcuevas.adaptadores.AdaptadorLugaresBD;
 import com.example.mislugares_davidcuevas.casos_uso.CasoUsoAlmacenamiento;
 import com.example.mislugares_davidcuevas.casos_uso.CasoUsoLocalizacion;
 import com.example.mislugares_davidcuevas.casos_uso.CasosUsoLugar;
 import com.example.mislugares_davidcuevas.datos.LugaresBD;
 import com.example.mislugares_davidcuevas.mapas.MapsActivity;
-import com.example.mislugares_davidcuevas.modelo.RepositorioLugares;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 public class MainActivity extends AppCompatActivity {
     private LugaresBD lugares;
     private AdaptadorLugaresBD adaptador;
-
+    private static final int MY_WRITE_REQUEST_CODE = 2;
     private CasosUsoLugar usoLugar;
-    private MenuItem preferencias;
     private CasoUsoAlmacenamiento usoAlmacenamiento;
     private RecyclerView recyclerView;
     static final int RESULTADO_PREFERENCIAS = 0;
@@ -49,19 +46,27 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         adaptador = ((Aplicacion) getApplication()).adaptador;
         lugares = ((Aplicacion) getApplication()).lugares;
+
         usoLugar = new CasosUsoLugar(this, lugares, adaptador);
+
+        //permisos
+
+        usoAlmacenamiento = new CasoUsoAlmacenamiento(MainActivity.this, MY_WRITE_REQUEST_CODE);
+        usoAlmacenamiento.solicitarPermiso(Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                "Necesita permisos de almacenamiento para añadir fotografías",MY_WRITE_REQUEST_CODE);
         usoLocalizacion = new CasoUsoLocalizacion(this,
                 SOLICITUD_PERMISO_LOCALIZACION);
         setSupportActionBar(toolbar);
 
         inicializarReciclerView();
 
-        /*adaptador.setOnItemClickListener(new View.OnClickListener() {
+
+        adaptador.setOnItemClickListener(new View.OnClickListener() {
             @Override public void onClick(View v) {
                 int pos =(Integer)(v.getTag());
                 usoLugar.mostrar(pos);
             }
-        });*/
+        });
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {

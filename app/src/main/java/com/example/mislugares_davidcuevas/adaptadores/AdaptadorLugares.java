@@ -15,6 +15,13 @@ import com.example.mislugares_davidcuevas.modelo.Lugar;
 import com.example.mislugares_davidcuevas.modelo.RepositorioLugares;
 import com.example.mislugares_davidcuevas.presentacion.Aplicacion;
 
+/**
+ * @author escam
+ * @see androidx.recyclerview.widget.RecyclerView.Adapter
+ * @version 0.3
+ *
+ */
+
 public class AdaptadorLugares  extends RecyclerView.Adapter<AdaptadorLugares.ViewHolder> {
     protected View.OnClickListener onClickListener;
     protected RepositorioLugares lugares;         // Lista de lugares a mostrar

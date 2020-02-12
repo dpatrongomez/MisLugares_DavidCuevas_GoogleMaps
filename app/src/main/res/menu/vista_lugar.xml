@@ -4,13 +4,13 @@
     <item
         android:id="@+id/accion_compartir"
         android:title="Compartir"
-        android:icon="@android:drawable/ic_menu_share"
+        android:icon="@drawable/compartir"
         android:orderInCategory="10"
         app:showAsAction="ifRoom"/>
     <item
         android:id="@+id/accion_llegar"
         android:title="Cómo llegar"
-        android:icon="@android:drawable/ic_menu_directions"
+        android:icon="@drawable/ir"
         android:orderInCategory="20"
         app:showAsAction="ifRoom"/>
     <item
