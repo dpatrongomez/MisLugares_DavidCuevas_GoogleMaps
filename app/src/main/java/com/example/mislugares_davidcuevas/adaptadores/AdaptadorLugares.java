@@ -18,7 +18,7 @@ import com.example.mislugares_davidcuevas.presentacion.Aplicacion;
 /**
  * The type Adaptador lugares.
  * @author David Cuevas Cano
- * @version 0.3
+ * @version 0.5
  * @see androidx.recyclerview.widget.RecyclerView.Adapter
  */
 public class AdaptadorLugares  extends RecyclerView.Adapter<AdaptadorLugares.ViewHolder> {
