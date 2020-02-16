@@ -5,6 +5,10 @@ import android.preference.PreferenceFragment;
 
 import com.example.mislugares_davidcuevas.R;
 
+/**
+ * Fragment de PreferenciasActivity
+ * @author David Cuevas Cano
+ */
 public class PreferenciasFragment extends PreferenceFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {

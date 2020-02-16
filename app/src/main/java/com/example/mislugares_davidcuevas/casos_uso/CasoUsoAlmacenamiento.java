@@ -11,6 +11,10 @@ import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
 
+/**
+ * Permisos de almacenamiento.
+ * @author David Cuevas Cano
+ */
 public class CasoUsoAlmacenamiento implements ActivityCompat.OnRequestPermissionsResultCallback {
 
 
@@ -19,6 +23,10 @@ public class CasoUsoAlmacenamiento implements ActivityCompat.OnRequestPermission
     private int codigoPermiso;
 
 
+    /**
+     * @param actividad     the actividad
+     * @param codigoPermiso the codigo permiso
+     */
     public CasoUsoAlmacenamiento(Activity actividad, int codigoPermiso) {
         this.actividad = actividad;
         this.codigoPermiso = codigoPermiso;
@@ -29,6 +37,13 @@ public class CasoUsoAlmacenamiento implements ActivityCompat.OnRequestPermission
     }
 
 
+    /**
+     * Solicitar permiso.
+     *
+     * @param permiso       the permiso
+     * @param justificacion the justificacion
+     * @param requestCode   the request code
+     */
     public  void solicitarPermiso(final String permiso, String justificacion, final int requestCode) {
         if (ActivityCompat.shouldShowRequestPermissionRationale(actividad, permiso)){
             new AlertDialog.Builder(actividad)
@@ -46,6 +61,14 @@ public class CasoUsoAlmacenamiento implements ActivityCompat.OnRequestPermission
         }
     }
 
+    /**
+     * Solicitar permiso fragment.
+     *
+     * @param permiso       the permiso
+     * @param justificacion the justificacion
+     * @param requestCode   the request code
+     * @param fragment      the fragment
+     */
     public  void solicitarPermisoFragment(final String permiso, String justificacion, final int requestCode, final Fragment fragment) {
         if (fragment.shouldShowRequestPermissionRationale(permiso)){
             new AlertDialog.Builder(fragment.getActivity())
@@ -63,6 +86,11 @@ public class CasoUsoAlmacenamiento implements ActivityCompat.OnRequestPermission
     }
 
 
+    /**
+     * Si devuelve true, la app tiene permisos de lectura
+     *
+     * @return the boolean
+     */
     public boolean hayPermisoAlmacenamiento() {
         return (ActivityCompat.checkSelfPermission(
                 actividad, Manifest.permission.READ_EXTERNAL_STORAGE)
@@ -70,11 +98,17 @@ public class CasoUsoAlmacenamiento implements ActivityCompat.OnRequestPermission
     }
 
 
+    /**
+     * Si devuelve true, la app tiene permisos de escritura
+     *
+     * @return the boolean
+     */
     public boolean hayPermisoAlmacenamientoEscritura() {
         return (ActivityCompat.checkSelfPermission(
                 actividad, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 == PackageManager.PERMISSION_GRANTED);
     }
+
 
     public boolean hayPermisoUbicacion(){
         return (ActivityCompat.checkSelfPermission(actividad,

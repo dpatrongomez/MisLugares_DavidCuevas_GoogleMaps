@@ -28,6 +28,10 @@ import com.example.mislugares_davidcuevas.datos.LugaresBD;
 import com.example.mislugares_davidcuevas.mapas.MapsActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+/**
+ * Clase Main donde se inicializa el RecycleView
+ * @author David Cuevas Cano
+ */
 public class MainActivity extends AppCompatActivity {
     private LugaresBD lugares;
     private AdaptadorLugaresBD adaptador;
@@ -35,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     private CasosUsoLugar usoLugar;
     private CasoUsoAlmacenamiento usoAlmacenamiento;
     private RecyclerView recyclerView;
+
     static final int RESULTADO_PREFERENCIAS = 0;
     private static final int SOLICITUD_PERMISO_LOCALIZACION = 1;
     private CasoUsoLocalizacion usoLocalizacion;
@@ -148,15 +153,25 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    /**
+     * Lanzar preferencias.
+     */
     public void LanzarPreferencias(){
         Intent i = new Intent(this, PreferenciasActivity.class);
         startActivityForResult(i, RESULTADO_PREFERENCIAS);
     }
 
+    /**
+     * Lanzar acerca de.
+     */
     public void LanzarAcercaDe(){
         Intent acercaDe = new Intent(MainActivity.this, AcercaDeActivity.class);
         startActivity(acercaDe);
     }
+
+    /**
+     * Lanzar vista lugar.
+     */
     public void lanzarVistaLugar(){
         final EditText entrada = new EditText(this);
         entrada.setText("0");
@@ -173,10 +188,17 @@ public class MainActivity extends AppCompatActivity {
             .show();
     }
 
+    /**
+     * Lanzar mapa.
+     */
     public void LanzarMapa(){
         Intent mapa = new Intent(MainActivity.this, MapsActivity.class);
         startActivity(mapa);
     }
+
+    /**
+     * Inicializar recicler view.
+     */
     public void inicializarReciclerView() {
         recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);

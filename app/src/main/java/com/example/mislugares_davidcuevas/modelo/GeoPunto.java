@@ -1,11 +1,24 @@
 package com.example.mislugares_davidcuevas.modelo;
 
+/**
+ * Modelo Geo punto.
+ * @author David Cuevas Cano
+ */
 public class GeoPunto {
 
     private double longitud, latitud;
 
+    /**
+     * Metodo Sin posicion.
+     */
     static public GeoPunto SIN_POSICION = new GeoPunto(0.0,0.0);
 
+    /**
+     * Instancia un nuevo Geo punto.
+     *
+     * @param longitud the longitud
+     * @param latitud  the latitud
+     */
     public GeoPunto(double longitud, double latitud) {
         this.longitud= longitud;
         this.latitud= latitud;
@@ -16,7 +29,12 @@ public class GeoPunto {
     }
 
 
-
+    /**
+     * Distancia
+     *
+     * @param punto the punto
+     * @return the double
+     */
     public double distancia(GeoPunto punto) {
         final double RADIO_TIERRA = 6371000; // en metros
         double dLat = Math.toRadians(latitud - punto.latitud);
@@ -30,21 +48,30 @@ public class GeoPunto {
         return c * RADIO_TIERRA;
     }
 
+    /**
+     * Punto sin posicion
+     *
+     * @return the geo punto
+     */
     public static GeoPunto puntoSinPosicion() {
         return SIN_POSICION;
     }
+
 
     public double getLongitud() {
         return longitud;
     }
 
+
     public void setLongitud(double longitud) {
         this.longitud = longitud;
     }
 
+
     public double getLatitud() {
         return latitud;
     }
+
 
     public void setLatitud(double latitud) {
         this.latitud = latitud;

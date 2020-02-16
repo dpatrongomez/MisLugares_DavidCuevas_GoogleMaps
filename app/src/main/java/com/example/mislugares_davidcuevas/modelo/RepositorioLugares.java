@@ -1,6 +1,9 @@
 package com.example.mislugares_davidcuevas.modelo;
 
-
+/**
+ * Interfaz de lugares
+ * @author David Cuevas Cano
+ */
 public interface RepositorioLugares {
     Lugar elemento(int id); //Devuelve el elemento dado su id
     void aniade(Lugar lugar); //Añade el elemento indicado

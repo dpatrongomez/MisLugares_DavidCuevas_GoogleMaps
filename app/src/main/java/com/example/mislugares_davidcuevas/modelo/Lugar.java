@@ -1,5 +1,9 @@
 package com.example.mislugares_davidcuevas.modelo;
 
+/**
+ * Modelo Lugar.
+ * @author David Cuevas Cano
+ */
 public class Lugar {
     private String nombre;
     private String direccion;
@@ -13,12 +17,26 @@ public class Lugar {
 
     private TipoLugar tipo;
 
+    /**
+     * Instancia un nuevo Lugar.
+     */
     public Lugar() {
         fecha = System.currentTimeMillis();
         posicion =  GeoPunto.SIN_POSICION;
         tipo = TipoLugar.OTROS;
     }
 
+    /**
+     * @param nombre     the nombre
+     * @param direccion  the direccion
+     * @param longitud   the longitud
+     * @param latitud    the latitud
+     * @param tipo       the tipo
+     * @param telefono   the telefono
+     * @param url        the url
+     * @param comentario the comentario
+     * @param valoracion the valoracion
+     */
     public Lugar(String nombre, String direccion, double longitud,
                  double latitud, TipoLugar tipo, int telefono,
                  String url, String comentario, int valoracion)  {
@@ -33,9 +51,11 @@ public class Lugar {
         this.valoracion = valoracion;
     }
 
+
     public String getNombre() {
         return nombre;
     }
+
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
@@ -49,17 +69,21 @@ public class Lugar {
         this.direccion = direccion;
     }
 
+
     public GeoPunto getPosicion() {
         return posicion;
     }
+
 
     public void setPosicion(GeoPunto posicion) {
         this.posicion = posicion;
     }
 
+
     public String getFoto() {
         return foto;
     }
+
 
     public void setFoto(String foto) {
         this.foto = foto;
@@ -69,29 +93,36 @@ public class Lugar {
         return telefono;
     }
 
+
     public void setTelefono(int telefono) {
         this.telefono = telefono;
     }
+
 
     public String getUrl() {
         return url;
     }
 
+
     public void setUrl(String url) {
         this.url = url;
     }
+
 
     public String getComentario() {
         return comentario;
     }
 
+
     public void setComentario(String comentario) {
         this.comentario = comentario;
     }
 
+
     public long getFecha() {
         return fecha;
     }
+
 
     public void setFecha(long fecha) {
         this.fecha = fecha;
@@ -100,6 +131,7 @@ public class Lugar {
     public float getValoracion() {
         return valoracion;
     }
+
 
     public void setValoracion(float valoracion) {
         this.valoracion = valoracion;

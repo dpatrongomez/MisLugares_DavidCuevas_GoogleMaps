@@ -23,6 +23,10 @@ import com.example.mislugares_davidcuevas.modelo.RepositorioLugares;
 import com.example.mislugares_davidcuevas.modelo.TipoLugar;
 
 
+/**
+ * Clase EdicionLugarActivity
+ * @author David Cuevas Cano
+ */
 public class EdicionLugarActivity extends AppCompatActivity {
     private LugaresBD lugares;
     private AdaptadorLugaresBD adaptador;
@@ -54,6 +58,9 @@ public class EdicionLugarActivity extends AppCompatActivity {
         actualizaVistas();
     }
 
+    /**
+     * Actualiza vistas.
+     */
     public void actualizaVistas() {
         nombre = findViewById(R.id.nombree);
         nombre.setText(lugar.getNombre());

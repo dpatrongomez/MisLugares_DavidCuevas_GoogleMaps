@@ -21,6 +21,10 @@ import com.example.mislugares_davidcuevas.presentacion.Aplicacion;
 
 import static android.content.Context.LOCATION_SERVICE;
 
+/**
+ * Permisos para localizacion.
+ * @author David Cuevas Cano
+ */
 public class CasoUsoLocalizacion implements LocationListener, ActivityCompat.OnRequestPermissionsResultCallback {
     private static final String TAG = "MisLugares";
     private Activity actividad;
@@ -32,7 +36,10 @@ public class CasoUsoLocalizacion implements LocationListener, ActivityCompat.OnR
     private static final long DOS_MINUTOS = 2 * 60 * 1000;
 
 
-
+    /**
+     * @param actividad     the actividad
+     * @param codigoPermiso the codigo permiso
+     */
     public CasoUsoLocalizacion(Activity actividad, int codigoPermiso) {
         this.actividad = actividad;
         this.codigoPermiso = codigoPermiso;
@@ -45,12 +52,20 @@ public class CasoUsoLocalizacion implements LocationListener, ActivityCompat.OnR
                 "Necesita permisos de localizacion",3, actividad);
     }
 
+    /**
+     * Si devuelve true es que la app tiene permisos de localizacion
+     *
+     * @return the boolean
+     */
     public boolean hayPermisoLocalizacion() {
         return (ActivityCompat.checkSelfPermission(
                 actividad, Manifest.permission.ACCESS_FINE_LOCATION)
                 == PackageManager.PERMISSION_GRANTED);
     }
 
+    /**
+     * Ultima localizazion.
+     */
     @SuppressLint("MissingPermission")
     void ultimaLocalizazion(){
         if (hayPermisoLocalizacion()) {
@@ -69,6 +84,14 @@ public class CasoUsoLocalizacion implements LocationListener, ActivityCompat.OnR
         }
     }
 
+    /**
+     * Solicitar permiso.
+     *
+     * @param permiso       the permiso
+     * @param justificacion the justificacion
+     * @param requestCode   the request code
+     * @param actividad     the actividad
+     */
     public static void solicitarPermiso(final String permiso, String
             justificacion, final int requestCode, final Activity actividad) {
         if (ActivityCompat.shouldShowRequestPermissionRationale(actividad,
@@ -87,6 +110,9 @@ public class CasoUsoLocalizacion implements LocationListener, ActivityCompat.OnR
         }
     }
 
+    /**
+     * Permiso concedido.
+     */
     public void permisoConcedido() {
         ultimaLocalizazion();
         activarProveedores();
@@ -142,9 +168,11 @@ public class CasoUsoLocalizacion implements LocationListener, ActivityCompat.OnR
         }
     }
 
+
     public void activar() {
         if (hayPermisoLocalizacion()) activarProveedores();
     }
+
 
     public void desactivar() {
         if (hayPermisoLocalizacion()) manejadorLoc.removeUpdates(this);

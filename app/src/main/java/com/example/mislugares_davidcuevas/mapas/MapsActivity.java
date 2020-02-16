@@ -25,6 +25,10 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+/**
+ * Mapas
+ * @author David Cuevas Cano
+ */
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener {
 
     private GoogleMap maps;
@@ -39,6 +43,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 getSupportFragmentManager().findFragmentById(R.id.mapa);
         mapFragment.getMapAsync(this);
     }
+
+    /**
+     *
+     * @param googleMap
+     * Prepara el mapa y lo muestra con las marcas que existen de los lugares
+     */
 
     @Override public void onMapReady(GoogleMap googleMap) {
         maps = googleMap;
@@ -74,6 +84,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         maps.setOnInfoWindowClickListener(this);
     }
 
+    /**
+     *
+     * @param marker
+     * Muestra informacion de la marca pulsada
+     */
     @Override
     public void onInfoWindowClick(Marker marker) {
         for (int id=0; id<adaptador.getItemCount(); id++){

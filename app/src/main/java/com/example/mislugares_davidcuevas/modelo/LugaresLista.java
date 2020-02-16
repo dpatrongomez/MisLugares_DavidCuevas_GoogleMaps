@@ -3,10 +3,18 @@ package com.example.mislugares_davidcuevas.modelo;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Modelo de Lugares
+ * @author David Cuevas Cano
+ */
 public class LugaresLista implements RepositorioLugares {
+
 
     protected List<Lugar> listaLugares;
 
+    /**
+     * Instancia un nuevo Lugares lista.
+     */
     public LugaresLista() {
         listaLugares = new ArrayList<Lugar>();
         aniadeEjemplos();
@@ -40,7 +48,9 @@ public class LugaresLista implements RepositorioLugares {
     }
 
 
-
+    /**
+     * Añade ejemplos.
+     */
     public void aniadeEjemplos() {
         aniade(new Lugar("Escuela Politécnica Superior de Gandía",
                 "C/ Paranimf, 1 46730 Gandia (SPAIN)", -0.166093, 38.995656,

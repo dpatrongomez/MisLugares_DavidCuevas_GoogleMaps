@@ -9,10 +9,23 @@ import com.example.mislugares_davidcuevas.modelo.GeoPunto;
 import com.example.mislugares_davidcuevas.modelo.LugaresLista;
 import com.example.mislugares_davidcuevas.modelo.RepositorioLugares;
 
+/**
+ * The type Aplicacion.
+ * @author David Cuevas Cano
+ */
 public class Aplicacion extends Application {
 
+    /**
+     * Base de datos Lugares.
+     */
     public LugaresBD lugares;
+    /**
+     * Adaptador de la base de datos
+     */
     public AdaptadorLugaresBD adaptador;
+    /**
+     * La posicion actual
+     */
     public GeoPunto posicionActual = new GeoPunto(0.0, 0.0);
 
     @Override public void onCreate() {

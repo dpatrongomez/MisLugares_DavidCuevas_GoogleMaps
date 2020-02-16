@@ -33,12 +33,21 @@ import java.net.URL;
 
 import static com.example.mislugares_davidcuevas.presentacion.VistaLugarActivity.RESULTADO_GALERIA;
 
+/**
+ * Casos de uso en lugares
+ * @author David Cuevas Cano
+ */
 public class CasosUsoLugar {
     private Activity actividad;
     private LugaresBD lugares;
     private AdaptadorLugaresBD adaptador;
 
 
+    /**
+     * @param actividad the actividad
+     * @param lugares   the lugares
+     * @param adaptador the adaptador
+     */
     public CasosUsoLugar(Activity actividad, LugaresBD lugares, AdaptadorLugaresBD adaptador) {
         this.actividad = actividad;
         this.lugares = lugares;
@@ -46,6 +55,11 @@ public class CasosUsoLugar {
     }
 
 
+    /**
+     * Mostrar.
+     *
+     * @param pos the pos
+     */
     public void mostrar(int pos) {
         Intent i = new Intent(actividad, VistaLugarActivity.class);
         i.putExtra("pos", pos);
@@ -53,6 +67,11 @@ public class CasosUsoLugar {
     }
 
 
+    /**
+     * Borrar.
+     *
+     * @param id the id
+     */
     public void borrar(final int id) {
         new AlertDialog.Builder(actividad)
                 .setTitle("Borrar lugar")
@@ -71,12 +90,25 @@ public class CasosUsoLugar {
                 .show();
 
     }
+
+    /**
+     * Editar.
+     *
+     * @param pos             the pos
+     * @param codidoSolicitud the codido solicitud
+     */
     public void editar(int pos, int codidoSolicitud) {
         Intent i = new Intent(actividad, EdicionLugarActivity.class);
         i.putExtra("pos", pos);
         actividad.startActivityForResult(i, codidoSolicitud);
     }
 
+    /**
+     * Guardar.
+     *
+     * @param id         the id
+     * @param nuevoLugar the nuevo lugar
+     */
     public void guardar(int id, Lugar nuevoLugar) {
         lugares.actualiza(id, nuevoLugar);
         adaptador.setCursor(lugares.extraeCursor());
@@ -84,11 +116,22 @@ public class CasosUsoLugar {
         //Toast.makeText(actividad.getBaseContext(), "Guardado correctamente", Toast.LENGTH_SHORT).show();
     }
 
+    /**
+     * Actualiza posicion de lugar.
+     *
+     * @param pos   the pos
+     * @param lugar the lugar
+     */
     public void actualizaPosLugar(int pos, Lugar lugar) {
         int id = adaptador.idPosicion(pos);
         guardar(id, lugar);  //
     }
 
+    /**
+     * Compartir.
+     *
+     * @param lugar the lugar
+     */
     public void compartir(Lugar lugar) {
         Intent i = new Intent(Intent.ACTION_SEND);
         i.setType("text/plain");
@@ -98,18 +141,33 @@ public class CasosUsoLugar {
     }
 
 
+    /**
+     * Llamar telefono.
+     *
+     * @param lugar the lugar
+     */
     public void llamarTelefono(Lugar lugar) {
         actividad.startActivity(new Intent(Intent.ACTION_DIAL,
                 Uri.parse("tel:" + lugar.getTelefono())));
     }
 
 
+    /**
+     * Ver pg web.
+     *
+     * @param lugar the lugar
+     */
     public void verPgWeb(Lugar lugar) {
         actividad.startActivity(new Intent(Intent.ACTION_VIEW,
                 Uri.parse(lugar.getUrl())));
     }
 
 
+    /**
+     * Ver mapa.
+     *
+     * @param lugar the lugar
+     */
     public void verMapa(Lugar lugar) {
         double lat = lugar.getPosicion().getLatitud();
         double lon = lugar.getPosicion().getLongitud();
@@ -120,7 +178,13 @@ public class CasosUsoLugar {
     }
 
 
-
+    /**
+     * Poner foto.
+     *
+     * @param pos       the pos
+     * @param uri       the uri
+     * @param imageView the image view
+     */
     public void ponerFoto(int pos, String uri, ImageView imageView) {
         Lugar lugar = adaptador.lugarPosicion(pos);
         lugar.setFoto(uri);
@@ -129,6 +193,11 @@ public class CasosUsoLugar {
     }
 
 
+    /**
+     * Galeria.
+     *
+     * @param view the view
+     */
     public void galeria(View view) {
         String action;
         if (android.os.Build.VERSION.SDK_INT >= 19) { // API 19 - Kitkat
@@ -144,7 +213,12 @@ public class CasosUsoLugar {
     }
 
 
-
+    /**
+     * Visualizar foto.
+     *
+     * @param lugar     the lugar
+     * @param imageView the image view
+     */
     public void visualizarFoto(Lugar lugar, ImageView imageView) {
         if (lugar.getFoto() != null && !lugar.getFoto().isEmpty()) {
             imageView.setImageBitmap(reduceBitmap(actividad, String.valueOf(Uri.parse(lugar.getFoto())), 1024,   1024));
@@ -154,6 +228,12 @@ public class CasosUsoLugar {
     }
 
 
+    /**
+     * Tomar foto uri.
+     *
+     * @param codidoSolicitud the codido solicitud
+     * @return the uri
+     */
     public Uri tomarFoto(int codidoSolicitud) {
         try {
             Uri uriUltimaFoto;
@@ -177,6 +257,14 @@ public class CasosUsoLugar {
         }
     }
 
+    /**
+     * Reducir MB de la foto
+     * @param contexto
+     * @param uri
+     * @param maxAncho
+     * @param maxAlto
+     * @return
+     */
     private Bitmap reduceBitmap(Context contexto, String uri, int maxAncho, int maxAlto) {
         try {
             InputStream input = null;
@@ -206,6 +294,9 @@ public class CasosUsoLugar {
         }
     }
 
+    /**
+     * Metodo para crear un uevo lugar
+     */
     public void nuevo() {
         int id = lugares.nuevo();
         GeoPunto posicion = ((Aplicacion) actividad.getApplication())
@@ -219,4 +310,5 @@ public class CasosUsoLugar {
         i.putExtra("_id", id);
         actividad.startActivity(i);
     }
+
 }

@@ -140,12 +140,15 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <ImageView
-                android:id="@+id/menu_my_calendar"
+            <ImageButton
+                android:id="@+id/icono_fecha"
+                style="@style/Widget.AppCompat.ImageButton"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
+                android:background="#81d4fa"
                 android:contentDescription="logo de fecha"
-                android:src="@android:drawable/ic_menu_my_calendar" />
+                android:src="@android:drawable/ic_menu_my_calendar"
+                android:tint="#00FFFFFF" />
 
             <TextView
                 android:id="@+id/fecha"
@@ -161,12 +164,14 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <ImageView
-                android:id="@+id/menu_recent_history"
+            <ImageButton
+                android:id="@+id/icono_hora"
+                style="@style/Widget.AppCompat.ImageButton"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
+                android:background="#81d4fa"
                 android:contentDescription="logo de historia"
-                android:src="@android:drawable/ic_menu_recent_history" />
+                android:src="@android:drawable/ic_menu_recent_history"/>
 
             <TextView
                 android:id="@+id/hora"

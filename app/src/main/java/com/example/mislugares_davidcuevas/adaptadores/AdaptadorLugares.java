@@ -16,24 +16,38 @@ import com.example.mislugares_davidcuevas.modelo.RepositorioLugares;
 import com.example.mislugares_davidcuevas.presentacion.Aplicacion;
 
 /**
- * @author escam
- * @see androidx.recyclerview.widget.RecyclerView.Adapter
+ * The type Adaptador lugares.
+ * @author David Cuevas Cano
  * @version 0.3
- *
+ * @see androidx.recyclerview.widget.RecyclerView.Adapter
  */
-
 public class AdaptadorLugares  extends RecyclerView.Adapter<AdaptadorLugares.ViewHolder> {
+
     protected View.OnClickListener onClickListener;
+
     protected RepositorioLugares lugares;         // Lista de lugares a mostrar
+
+
     public AdaptadorLugares(RepositorioLugares lugares) {
         this.lugares = lugares;
     }
 
+    /**
+     * View Holder de RecycleView
+     */
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView nombre, direccion;
+
+        public TextView nombre,direccion;
+
         public ImageView foto;
+
         public RatingBar valoracion;
+
         public TextView distancia;
+
+        /**
+         * @param itemView
+         */
         public ViewHolder(View itemView) {
             super(itemView);
             nombre = itemView.findViewById(R.id.nombre);
@@ -43,6 +57,11 @@ public class AdaptadorLugares  extends RecyclerView.Adapter<AdaptadorLugares.Vie
             distancia=itemView.findViewById(R.id.distancia);
         }
 
+        /**
+         * Personaliza.
+         *
+         * @param lugar the lugar
+         */
         public void personaliza(Lugar lugar) {
             nombre.setText(lugar.getNombre());
             direccion.setText(lugar.getDireccion());

@@ -14,11 +14,16 @@ import com.example.mislugares_davidcuevas.modelo.RepositorioLugares;
 import com.example.mislugares_davidcuevas.modelo.TipoLugar;
 import com.example.mislugares_davidcuevas.presentacion.Aplicacion;
 
-import java.util.prefs.PreferencesFactory;
-
+/**
+ * Base de datos Lugares bd.
+ * @author David Cuevas Cano
+ */
 public class LugaresBD extends SQLiteOpenHelper implements RepositorioLugares {
 
+
     Context contexto;
+
+
     public LugaresBD(Context contexto) {
         super(contexto, "lugares", null, 1);
         this.contexto = contexto;
@@ -72,6 +77,12 @@ public class LugaresBD extends SQLiteOpenHelper implements RepositorioLugares {
                                     int newVersion) {
     }
 
+    /**
+     * Extrae lugar.
+     *
+     * @param cursor the cursor
+     * @return the lugar
+     */
     public static Lugar extraeLugar(Cursor cursor) {
         Lugar lugar = new Lugar();
         lugar.setNombre(cursor.getString(1));
@@ -88,6 +99,11 @@ public class LugaresBD extends SQLiteOpenHelper implements RepositorioLugares {
         return lugar;
     }
 
+    /**
+     * Extrae cursor.
+     *
+     * @return the cursor
+     */
     public Cursor extraeCursor() {
         SharedPreferences pref =
                 PreferenceManager.getDefaultSharedPreferences(contexto);

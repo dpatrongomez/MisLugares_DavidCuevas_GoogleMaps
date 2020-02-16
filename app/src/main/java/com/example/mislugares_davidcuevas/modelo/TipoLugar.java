@@ -3,6 +3,10 @@ package com.example.mislugares_davidcuevas.modelo;
 
 import com.example.mislugares_davidcuevas.R;
 
+/**
+ * @author David Cuevas Cano
+ * Distintos tipos de lugares para la hora de crear uno nuevo
+ */
 public enum TipoLugar {
     OTROS ("Otros", R.drawable.otros),
     RESTAURANTE ("Restaurante", R.drawable.restaurante),
