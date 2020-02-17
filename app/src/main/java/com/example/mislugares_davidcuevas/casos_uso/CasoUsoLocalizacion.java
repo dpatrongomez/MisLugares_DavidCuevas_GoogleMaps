@@ -111,7 +111,8 @@ public class CasoUsoLocalizacion implements LocationListener, ActivityCompat.OnR
     }
 
     /**
-     * Permiso concedido.
+     * Concede el permiso a la localizacion e inicia los proveedores
+     * notifica al recycleView que los datos han sido cambiados
      */
     public void permisoConcedido() {
         ultimaLocalizazion();

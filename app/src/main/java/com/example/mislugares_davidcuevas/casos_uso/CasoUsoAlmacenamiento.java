@@ -110,14 +110,6 @@ public class CasoUsoAlmacenamiento implements ActivityCompat.OnRequestPermission
     }
 
 
-    public boolean hayPermisoUbicacion(){
-        return (ActivityCompat.checkSelfPermission(actividad,
-                Manifest.permission.ACCESS_FINE_LOCATION)
-                == PackageManager.PERMISSION_GRANTED);
-    }
-
-
-
     @Override public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         if (requestCode == codigoPermiso
                 && grantResults.length == 1

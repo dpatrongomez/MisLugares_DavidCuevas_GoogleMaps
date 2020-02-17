@@ -113,7 +113,6 @@ public class CasosUsoLugar {
         lugares.actualiza(id, nuevoLugar);
         adaptador.setCursor(lugares.extraeCursor());
         adaptador.notifyDataSetChanged();
-        //Toast.makeText(actividad.getBaseContext(), "Guardado correctamente", Toast.LENGTH_SHORT).show();
     }
 
     /**

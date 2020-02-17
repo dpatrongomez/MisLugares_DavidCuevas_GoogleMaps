@@ -11,6 +11,7 @@ import androidx.fragment.app.FragmentActivity;
 
 import com.example.mislugares_davidcuevas.R;
 import com.example.mislugares_davidcuevas.adaptadores.AdaptadorLugaresBD;
+import com.example.mislugares_davidcuevas.casos_uso.CasoUsoLocalizacion;
 import com.example.mislugares_davidcuevas.modelo.GeoPunto;
 import com.example.mislugares_davidcuevas.modelo.Lugar;
 import com.example.mislugares_davidcuevas.presentacion.Aplicacion;
@@ -32,6 +33,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     private GoogleMap maps;
     private AdaptadorLugaresBD adaptador;
+    private CasoUsoLocalizacion usoLocalizacion;
 
 
     @Override public void onCreate(Bundle savedInstanceState) {
@@ -41,6 +43,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment)
                 getSupportFragmentManager().findFragmentById(R.id.mapa);
         mapFragment.getMapAsync(this);
+        usoLocalizacion = new CasoUsoLocalizacion(this, 1);
     }
 
     /**
@@ -53,13 +56,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         maps = googleMap;
         maps.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 
-        if (ContextCompat.checkSelfPermission(this,
-                android.Manifest.permission.ACCESS_FINE_LOCATION) ==
-                PackageManager.PERMISSION_GRANTED) {
+        if (usoLocalizacion.hayPermisoLocalizacion()) {
             maps.setMyLocationEnabled(true);
-            maps.getUiSettings().setZoomControlsEnabled(true);
-            maps.getUiSettings().setCompassEnabled(true);
         }
+        maps.getUiSettings().setZoomControlsEnabled(true);
+        maps.getUiSettings().setCompassEnabled(true);
         if (adaptador.getItemCount() > 0) {
             GeoPunto p = adaptador.lugarPosicion(0).getPosicion();
             maps.moveCamera(CameraUpdateFactory.newLatLngZoom(
