@@ -27,15 +27,15 @@ public class Lugar {
     }
 
     /**
-     * @param nombre     the nombre
-     * @param direccion  the direccion
-     * @param longitud   the longitud
-     * @param latitud    the latitud
-     * @param tipo       the tipo
-     * @param telefono   the telefono
-     * @param url        the url
-     * @param comentario the comentario
-     * @param valoracion the valoracion
+     * @param nombre
+     * @param direccion
+     * @param longitud
+     * @param latitud
+     * @param tipo
+     * @param telefono
+     * @param url
+     * @param comentario
+     * @param valoracion
      */
     public Lugar(String nombre, String direccion, double longitud,
                  double latitud, TipoLugar tipo, int telefono,

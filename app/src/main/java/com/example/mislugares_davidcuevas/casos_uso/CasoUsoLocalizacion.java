@@ -37,8 +37,8 @@ public class CasoUsoLocalizacion implements LocationListener, ActivityCompat.OnR
 
 
     /**
-     * @param actividad     the actividad
-     * @param codigoPermiso the codigo permiso
+     * @param actividad
+     * @param codigoPermiso
      */
     public CasoUsoLocalizacion(Activity actividad, int codigoPermiso) {
         this.actividad = actividad;
@@ -55,7 +55,7 @@ public class CasoUsoLocalizacion implements LocationListener, ActivityCompat.OnR
     /**
      * Si devuelve true es que la app tiene permisos de localizacion
      *
-     * @return the boolean
+     * @return true o false
      */
     public boolean hayPermisoLocalizacion() {
         return (ActivityCompat.checkSelfPermission(
@@ -87,10 +87,10 @@ public class CasoUsoLocalizacion implements LocationListener, ActivityCompat.OnR
     /**
      * Solicitar permiso.
      *
-     * @param permiso       the permiso
-     * @param justificacion the justificacion
-     * @param requestCode   the request code
-     * @param actividad     the actividad
+     * @param permiso
+     * @param justificacion
+     * @param requestCode
+     * @param actividad
      */
     public static void solicitarPermiso(final String permiso, String
             justificacion, final int requestCode, final Activity actividad) {

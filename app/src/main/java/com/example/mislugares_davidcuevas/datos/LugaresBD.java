@@ -80,8 +80,8 @@ public class LugaresBD extends SQLiteOpenHelper implements RepositorioLugares {
     /**
      * Extrae lugar.
      *
-     * @param cursor the cursor
-     * @return the lugar
+     * @param cursor
+     * @return lugar
      */
     public static Lugar extraeLugar(Cursor cursor) {
         Lugar lugar = new Lugar();
@@ -102,7 +102,7 @@ public class LugaresBD extends SQLiteOpenHelper implements RepositorioLugares {
     /**
      * Extrae cursor.
      *
-     * @return the cursor
+     * @return cursor
      */
     public Cursor extraeCursor() {
         SharedPreferences pref =

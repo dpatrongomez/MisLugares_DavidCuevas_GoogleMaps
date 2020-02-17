@@ -60,7 +60,7 @@ public class AdaptadorLugares  extends RecyclerView.Adapter<AdaptadorLugares.Vie
         /**
          * Personaliza.
          *
-         * @param lugar the lugar
+         * @param lugar
          */
         public void personaliza(Lugar lugar) {
             nombre.setText(lugar.getNombre());

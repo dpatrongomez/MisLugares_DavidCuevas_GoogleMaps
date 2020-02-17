@@ -32,8 +32,8 @@ public class GeoPunto {
     /**
      * Distancia
      *
-     * @param punto the punto
-     * @return the double
+     * @param punto
+     * @return double
      */
     public double distancia(GeoPunto punto) {
         final double RADIO_TIERRA = 6371000; // en metros
@@ -51,7 +51,7 @@ public class GeoPunto {
     /**
      * Punto sin posicion
      *
-     * @return the geo punto
+     * @return GeoPunto
      */
     public static GeoPunto puntoSinPosicion() {
         return SIN_POSICION;

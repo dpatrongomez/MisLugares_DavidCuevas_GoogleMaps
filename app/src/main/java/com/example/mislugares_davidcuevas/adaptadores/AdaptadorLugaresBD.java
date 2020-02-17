@@ -16,8 +16,8 @@ public class AdaptadorLugaresBD extends AdaptadorLugares  {
     protected Cursor cursor;
 
     /**
-     * @param lugares the lugares
-     * @param cursor  the cursor
+     * @param lugares
+     * @param cursor
      */
     public AdaptadorLugaresBD(RepositorioLugares lugares, Cursor cursor) {
         super(lugares);
@@ -25,14 +25,14 @@ public class AdaptadorLugaresBD extends AdaptadorLugares  {
     }
 
     /**
-     * @return the cursor
+     * @return cursor
      */
     public Cursor getCursor() {
         return cursor;
     }
 
     /**
-     * @param cursor the cursor
+     * @param cursor
      */
     public void setCursor(Cursor cursor) {
         this.cursor = cursor;
@@ -41,8 +41,8 @@ public class AdaptadorLugaresBD extends AdaptadorLugares  {
     /**
      * Lugar posicion lugar.
      *
-     * @param posicion the posicion
-     * @return the lugar
+     * @param posicion
+     * @return lugar
      */
     public Lugar lugarPosicion(int posicion) {
         cursor.moveToPosition(posicion);
@@ -50,8 +50,8 @@ public class AdaptadorLugaresBD extends AdaptadorLugares  {
     }
 
     /**
-     * @param posicion the posicion
-     * @return the int
+     * @param posicion
+     * @return int
      */
     public int idPosicion(int posicion) {
         cursor.moveToPosition(posicion);
@@ -59,8 +59,8 @@ public class AdaptadorLugaresBD extends AdaptadorLugares  {
     }
 
     /**
-     * @param id the id
-     * @return the int
+     * @param id
+     * @return int
      */
     public int posicionId(int id) {
         int pos = 0;

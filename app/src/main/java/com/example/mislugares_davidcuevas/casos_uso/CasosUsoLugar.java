@@ -44,9 +44,9 @@ public class CasosUsoLugar {
 
 
     /**
-     * @param actividad the actividad
-     * @param lugares   the lugares
-     * @param adaptador the adaptador
+     * @param actividad
+     * @param lugares
+     * @param adaptador
      */
     public CasosUsoLugar(Activity actividad, LugaresBD lugares, AdaptadorLugaresBD adaptador) {
         this.actividad = actividad;
@@ -58,7 +58,7 @@ public class CasosUsoLugar {
     /**
      * Mostrar.
      *
-     * @param pos the pos
+     * @param pos
      */
     public void mostrar(int pos) {
         Intent i = new Intent(actividad, VistaLugarActivity.class);
@@ -70,7 +70,7 @@ public class CasosUsoLugar {
     /**
      * Borrar.
      *
-     * @param id the id
+     * @param id
      */
     public void borrar(final int id) {
         new AlertDialog.Builder(actividad)
@@ -94,8 +94,8 @@ public class CasosUsoLugar {
     /**
      * Editar.
      *
-     * @param pos             the pos
-     * @param codidoSolicitud the codido solicitud
+     * @param pos
+     * @param codidoSolicitud
      */
     public void editar(int pos, int codidoSolicitud) {
         Intent i = new Intent(actividad, EdicionLugarActivity.class);
@@ -106,8 +106,8 @@ public class CasosUsoLugar {
     /**
      * Guardar.
      *
-     * @param id         the id
-     * @param nuevoLugar the nuevo lugar
+     * @param id
+     * @param nuevoLugar
      */
     public void guardar(int id, Lugar nuevoLugar) {
         lugares.actualiza(id, nuevoLugar);
@@ -119,8 +119,8 @@ public class CasosUsoLugar {
     /**
      * Actualiza posicion de lugar.
      *
-     * @param pos   the pos
-     * @param lugar the lugar
+     * @param pos
+     * @param lugar
      */
     public void actualizaPosLugar(int pos, Lugar lugar) {
         int id = adaptador.idPosicion(pos);
@@ -130,7 +130,7 @@ public class CasosUsoLugar {
     /**
      * Compartir.
      *
-     * @param lugar the lugar
+     * @param lugar
      */
     public void compartir(Lugar lugar) {
         Intent i = new Intent(Intent.ACTION_SEND);
@@ -144,7 +144,7 @@ public class CasosUsoLugar {
     /**
      * Llamar telefono.
      *
-     * @param lugar the lugar
+     * @param lugar
      */
     public void llamarTelefono(Lugar lugar) {
         actividad.startActivity(new Intent(Intent.ACTION_DIAL,
@@ -155,7 +155,7 @@ public class CasosUsoLugar {
     /**
      * Ver pg web.
      *
-     * @param lugar the lugar
+     * @param lugar
      */
     public void verPgWeb(Lugar lugar) {
         actividad.startActivity(new Intent(Intent.ACTION_VIEW,
@@ -166,7 +166,7 @@ public class CasosUsoLugar {
     /**
      * Ver mapa.
      *
-     * @param lugar the lugar
+     * @param lugar
      */
     public void verMapa(Lugar lugar) {
         double lat = lugar.getPosicion().getLatitud();
@@ -181,9 +181,9 @@ public class CasosUsoLugar {
     /**
      * Poner foto.
      *
-     * @param pos       the pos
-     * @param uri       the uri
-     * @param imageView the image view
+     * @param pos
+     * @param uri
+     * @param imageView
      */
     public void ponerFoto(int pos, String uri, ImageView imageView) {
         Lugar lugar = adaptador.lugarPosicion(pos);
@@ -196,7 +196,7 @@ public class CasosUsoLugar {
     /**
      * Galeria.
      *
-     * @param view the view
+     * @param view
      */
     public void galeria(View view) {
         String action;
@@ -216,8 +216,8 @@ public class CasosUsoLugar {
     /**
      * Visualizar foto.
      *
-     * @param lugar     the lugar
-     * @param imageView the image view
+     * @param lugar
+     * @param imageView
      */
     public void visualizarFoto(Lugar lugar, ImageView imageView) {
         if (lugar.getFoto() != null && !lugar.getFoto().isEmpty()) {
@@ -231,8 +231,8 @@ public class CasosUsoLugar {
     /**
      * Tomar foto uri.
      *
-     * @param codidoSolicitud the codido solicitud
-     * @return the uri
+     * @param codidoSolicitud
+     * @return  uri
      */
     public Uri tomarFoto(int codidoSolicitud) {
         try {

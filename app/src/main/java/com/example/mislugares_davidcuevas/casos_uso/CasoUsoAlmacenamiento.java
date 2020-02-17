@@ -24,8 +24,8 @@ public class CasoUsoAlmacenamiento implements ActivityCompat.OnRequestPermission
 
 
     /**
-     * @param actividad     the actividad
-     * @param codigoPermiso the codigo permiso
+     * @param actividad
+     * @param codigoPermiso
      */
     public CasoUsoAlmacenamiento(Activity actividad, int codigoPermiso) {
         this.actividad = actividad;
@@ -40,9 +40,9 @@ public class CasoUsoAlmacenamiento implements ActivityCompat.OnRequestPermission
     /**
      * Solicitar permiso.
      *
-     * @param permiso       the permiso
-     * @param justificacion the justificacion
-     * @param requestCode   the request code
+     * @param permiso
+     * @param justificacion
+     * @param requestCode
      */
     public  void solicitarPermiso(final String permiso, String justificacion, final int requestCode) {
         if (ActivityCompat.shouldShowRequestPermissionRationale(actividad, permiso)){
@@ -64,10 +64,10 @@ public class CasoUsoAlmacenamiento implements ActivityCompat.OnRequestPermission
     /**
      * Solicitar permiso fragment.
      *
-     * @param permiso       the permiso
-     * @param justificacion the justificacion
-     * @param requestCode   the request code
-     * @param fragment      the fragment
+     * @param permiso
+     * @param justificacion
+     * @param requestCode
+     * @param fragment
      */
     public  void solicitarPermisoFragment(final String permiso, String justificacion, final int requestCode, final Fragment fragment) {
         if (fragment.shouldShowRequestPermissionRationale(permiso)){
@@ -89,7 +89,7 @@ public class CasoUsoAlmacenamiento implements ActivityCompat.OnRequestPermission
     /**
      * Si devuelve true, la app tiene permisos de lectura
      *
-     * @return the boolean
+     * @return true o false
      */
     public boolean hayPermisoAlmacenamiento() {
         return (ActivityCompat.checkSelfPermission(
@@ -101,7 +101,7 @@ public class CasoUsoAlmacenamiento implements ActivityCompat.OnRequestPermission
     /**
      * Si devuelve true, la app tiene permisos de escritura
      *
-     * @return the boolean
+     * @return true o false
      */
     public boolean hayPermisoAlmacenamientoEscritura() {
         return (ActivityCompat.checkSelfPermission(
