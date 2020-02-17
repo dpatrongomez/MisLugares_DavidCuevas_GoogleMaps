@@ -1,10 +1,5 @@
 package com.example.mislugares_davidcuevas.presentacion;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -18,6 +13,11 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mislugares_davidcuevas.R;
 import com.example.mislugares_davidcuevas.adaptadores.AdaptadorLugaresBD;
@@ -197,7 +197,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Inicializar recicler view.
+     * Inicializar recyclerView.
      */
     public void inicializarReciclerView() {
         recyclerView = findViewById(R.id.recycler_view);

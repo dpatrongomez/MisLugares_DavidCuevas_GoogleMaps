@@ -1,19 +1,18 @@
 package com.example.mislugares_davidcuevas.mapas;
 
-import androidx.core.content.ContextCompat;
-import androidx.fragment.app.FragmentActivity;
-
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentActivity;
+
 import com.example.mislugares_davidcuevas.R;
 import com.example.mislugares_davidcuevas.adaptadores.AdaptadorLugaresBD;
 import com.example.mislugares_davidcuevas.modelo.GeoPunto;
 import com.example.mislugares_davidcuevas.modelo.Lugar;
-import com.example.mislugares_davidcuevas.modelo.RepositorioLugares;
 import com.example.mislugares_davidcuevas.presentacion.Aplicacion;
 import com.example.mislugares_davidcuevas.presentacion.VistaLugarActivity;
 import com.google.android.gms.maps.CameraUpdateFactory;

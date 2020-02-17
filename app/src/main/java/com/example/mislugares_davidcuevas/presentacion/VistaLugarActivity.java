@@ -6,7 +6,6 @@ import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.text.format.DateUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,7 +31,6 @@ import com.example.mislugares_davidcuevas.modelo.Lugar;
 import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 
 
 /**
@@ -61,10 +59,6 @@ public class VistaLugarActivity extends AppCompatActivity {
 
     private Activity actividad;
 
-
-    private static final String CERO = "0";
-    private static final String DOS_PUNTOS = ":";
-    private static final String BARRA = "/";
 
 
     public final Calendar c = Calendar.getInstance();
@@ -320,13 +314,6 @@ public class VistaLugarActivity extends AppCompatActivity {
 
 
     /**
-     * Enumerado para los meses
-     */
-    public enum Meses{
-        Jan, Feb, Mar, Abr, May, Jun, Jul, Ago, Sep, Oct, Nov, Dic
-    }
-
-    /**
      * Obtener fecha y sobreescribimos en la base de datos
      */
     public void obtenerFecha(){
@@ -335,26 +322,24 @@ public class VistaLugarActivity extends AppCompatActivity {
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
 
 
-                adaptador.setCursor(lugares.extraeCursor());
-                adaptador.notifyDataSetChanged();
+                Calendar cal = Calendar.getInstance();
 
-                String[] fecha = txtHora.getText().toString().split(":");
+                cal.setTimeInMillis(lugar.getFecha());
 
-                int hour = Integer.valueOf(fecha[0]);
-                int min = Integer.valueOf(fecha[1]);
+                cal.set(Calendar.YEAR, year);
+                cal.set(Calendar.MONTH, month);
+                cal.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
-                Calendar cal = new GregorianCalendar(year, month, dayOfMonth, hour, min);
-                String date = DateUtils.formatDateTime(getBaseContext(), cal.getTimeInMillis(), DateUtils.FORMAT_SHOW_YEAR | DateUtils.FORMAT_ABBREV_MONTH);
-                txtFecha.setText(date);
+                lugar.setFecha(cal.getTimeInMillis());
 
-                c.set(year, month, dayOfMonth, hour, min);
-
+                usoLugar.actualizaPosLugar(pos, lugar);
+                txtFecha.setText(DateFormat.getDateInstance()
+                        .format(new Date(cal.getTimeInMillis())));
                 anio = year;
                 mes = month;
                 dia = dayOfMonth;
 
-                lugar.setFecha(cal.getTimeInMillis());
-                usoLugar.actualizaPosLugar(pos, lugar);
+
             }
         },anio, mes, dia);
 
@@ -371,39 +356,22 @@ public class VistaLugarActivity extends AppCompatActivity {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
 
-                adaptador.setCursor(lugares.extraeCursor());
-                adaptador.notifyDataSetChanged();
 
-                String[] fecha = txtFecha.getText().toString().replace(",", "").split(" ");
-                String month = String.valueOf(fecha[0]);
-                int day = Integer.valueOf(fecha[1]);
-                int year = Integer.valueOf(fecha[2]);
+                Calendar calendario = Calendar.getInstance();
+                calendario.setTimeInMillis(lugar.getFecha());
+                calendario.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                calendario.set(Calendar.MINUTE, minute);
+                lugar.setFecha(calendario.getTimeInMillis());
+                usoLugar.actualizaPosLugar(pos, lugar);
 
-                int mes = Meses.valueOf(month).ordinal();
-                Calendar cal = new GregorianCalendar(year,  mes, day, hora, minuto);
-
-                String horaFormateada = (hourOfDay < 9) ? String.valueOf(CERO + hourOfDay) : String.valueOf(hourOfDay);
-                String minutoFormateado = (minute < 9) ? String.valueOf(CERO + minute) : String.valueOf(minute);
-
-                String AM_PM;
-                if (hourOfDay < 12) {
-                    AM_PM = "AM";
-                } else {
-                    AM_PM = "PM";
-                }
-
-
-                txtHora.setText(horaFormateada + DOS_PUNTOS + minutoFormateado +DOS_PUNTOS+ segundos+" "+AM_PM);
-                c.set(year, mes, day, hourOfDay, minute);
-
+                txtHora.setText(DateFormat.getTimeInstance().format(
+                        new Date(calendario.getTimeInMillis())));
                 hora = hourOfDay;
                 minuto = minute;
 
-                lugar.setFecha(c.getTimeInMillis());
-                usoLugar.actualizaPosLugar(pos, lugar);
             }
 
-        }, hora, minuto, false);
+        }, hora, minuto, true);
         recogerHora.show();
 
     }

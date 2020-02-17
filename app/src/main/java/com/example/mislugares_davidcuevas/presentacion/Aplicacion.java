@@ -2,12 +2,9 @@ package com.example.mislugares_davidcuevas.presentacion;
 
 import android.app.Application;
 
-import com.example.mislugares_davidcuevas.adaptadores.AdaptadorLugares;
 import com.example.mislugares_davidcuevas.adaptadores.AdaptadorLugaresBD;
 import com.example.mislugares_davidcuevas.datos.LugaresBD;
 import com.example.mislugares_davidcuevas.modelo.GeoPunto;
-import com.example.mislugares_davidcuevas.modelo.LugaresLista;
-import com.example.mislugares_davidcuevas.modelo.RepositorioLugares;
 
 /**
  * The type Aplicacion.

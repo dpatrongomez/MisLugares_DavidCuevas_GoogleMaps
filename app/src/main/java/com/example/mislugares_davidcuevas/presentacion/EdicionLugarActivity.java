@@ -1,7 +1,5 @@
 package com.example.mislugares_davidcuevas.presentacion;
 
-import android.Manifest;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -9,17 +7,14 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.example.mislugares_davidcuevas.R;
 import com.example.mislugares_davidcuevas.adaptadores.AdaptadorLugaresBD;
-import com.example.mislugares_davidcuevas.casos_uso.CasoUsoAlmacenamiento;
 import com.example.mislugares_davidcuevas.casos_uso.CasosUsoLugar;
 import com.example.mislugares_davidcuevas.datos.LugaresBD;
 import com.example.mislugares_davidcuevas.modelo.Lugar;
-import com.example.mislugares_davidcuevas.modelo.RepositorioLugares;
 import com.example.mislugares_davidcuevas.modelo.TipoLugar;
 
 
