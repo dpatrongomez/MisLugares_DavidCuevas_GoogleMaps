@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
         adaptador = ((Aplicacion) getApplication()).adaptador;
         lugares = ((Aplicacion) getApplication()).lugares;
 
+
         usoLugar = new CasosUsoLugar(this, lugares, adaptador);
 
         //permisos

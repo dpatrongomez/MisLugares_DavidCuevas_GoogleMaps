@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.example.mislugares_davidcuevas.adaptadores.AdaptadorLugaresBD;
 import com.example.mislugares_davidcuevas.datos.LugaresBD;
+import com.example.mislugares_davidcuevas.mapas.MapsActivity;
 import com.example.mislugares_davidcuevas.modelo.GeoPunto;
 
 /**
@@ -25,10 +26,13 @@ public class Aplicacion extends Application {
      */
     public GeoPunto posicionActual = new GeoPunto(0.0, 0.0);
 
+
+
     @Override public void onCreate() {
         super.onCreate();
         lugares = new LugaresBD(this);
         adaptador= new AdaptadorLugaresBD(lugares, lugares.extraeCursor());
+
     }
 }
 

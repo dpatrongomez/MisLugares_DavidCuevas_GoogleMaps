@@ -1,17 +1,19 @@
 package com.example.mislugares_davidcuevas.mapas;
 
+import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 
 import com.example.mislugares_davidcuevas.R;
 import com.example.mislugares_davidcuevas.adaptadores.AdaptadorLugaresBD;
 import com.example.mislugares_davidcuevas.casos_uso.CasoUsoLocalizacion;
+import com.example.mislugares_davidcuevas.datos.LugaresBD;
 import com.example.mislugares_davidcuevas.modelo.GeoPunto;
 import com.example.mislugares_davidcuevas.modelo.Lugar;
 import com.example.mislugares_davidcuevas.presentacion.Aplicacion;
@@ -34,6 +36,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private GoogleMap maps;
     private AdaptadorLugaresBD adaptador;
     private CasoUsoLocalizacion usoLocalizacion;
+    private static final int SOLICITUD_PERMISO_LOCALIZACION = 1;
+    private Context contexto;
 
 
     @Override public void onCreate(Bundle savedInstanceState) {
@@ -43,7 +47,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment)
                 getSupportFragmentManager().findFragmentById(R.id.mapa);
         mapFragment.getMapAsync(this);
-        usoLocalizacion = new CasoUsoLocalizacion(this, 1);
+        usoLocalizacion = new CasoUsoLocalizacion(this, SOLICITUD_PERMISO_LOCALIZACION);
+        contexto = (Aplicacion)getApplication();
     }
 
     /**
@@ -54,7 +59,28 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override public void onMapReady(GoogleMap googleMap) {
         maps = googleMap;
-        maps.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(contexto);
+
+        /*witch (pref.getString("tipoMap", "tiposMapaValores")) {
+            case "0":
+                maps.setMapType(googleMap.MAP_TYPE_NORMAL);
+                break;
+            case "1":
+                maps.setMapType(googleMap.MAP_TYPE_SATELLITE);
+                break;
+
+            case "2":
+                maps.setMapType(googleMap.MAP_TYPE_TERRAIN);
+                break;
+            case "3":
+                maps.setMapType(googleMap.MAP_TYPE_HYBRID);
+                break;
+            default:
+                maps.setMapType(googleMap.MAP_TYPE_NORMAL);
+                break;
+        }*/
+        maps.setMapType(Integer.valueOf(pref.getString("tipoMap", "tiposMapaValores")));
 
         if (usoLocalizacion.hayPermisoLocalizacion()) {
             maps.setMyLocationEnabled(true);
@@ -85,7 +111,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     /**
-     *
      * @param marker
      * Muestra informacion de la marca pulsada
      */

@@ -22,7 +22,7 @@ import com.example.mislugares_davidcuevas.presentacion.Aplicacion;
 import static android.content.Context.LOCATION_SERVICE;
 
 /**
- * Permisos para localizacion.
+ * Permisos para localizacion
  * @author David Cuevas Cano
  */
 public class CasoUsoLocalizacion implements LocationListener, ActivityCompat.OnRequestPermissionsResultCallback {

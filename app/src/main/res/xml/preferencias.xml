@@ -20,5 +20,12 @@
         android:entries="@array/tiposOrden"
         android:entryValues="@array/tiposOrdenValores"
         android:defaultValue="0"/>
+    <ListPreference
+        android:key="tipoMap"
+        android:title="Tipo de mapa"
+        android:summary="Seleccion del tipo de mapa"
+        android:entries="@array/tiposMapa"
+        android:entryValues="@array/tiposMapaValores"
+        android:defaultValue="0"/>
 
 </PreferenceScreen>

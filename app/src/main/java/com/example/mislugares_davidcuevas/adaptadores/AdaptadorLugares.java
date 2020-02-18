@@ -107,7 +107,6 @@ public class AdaptadorLugares  extends RecyclerView.Adapter<AdaptadorLugares.Vie
     }
 
 
-
     @Override
     public void onBindViewHolder(ViewHolder holder, int posicion) {
         Lugar lugar = lugares.elemento(posicion);

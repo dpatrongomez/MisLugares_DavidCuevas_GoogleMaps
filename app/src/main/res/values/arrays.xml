@@ -10,5 +10,16 @@
         <item>1</item>
         <item>2</item>
     </string-array>
-
+    <string-array name="tiposMapa">
+        <item>Normal</item>
+        <item>Satellite</item>
+        <item>Terreno</item>
+        <item>Hibrido</item>
+    </string-array>
+    <string-array name="tiposMapaValores">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+    </string-array>
 </resources>
