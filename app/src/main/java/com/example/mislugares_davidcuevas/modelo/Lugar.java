@@ -1,7 +1,8 @@
 package com.example.mislugares_davidcuevas.modelo;
 
 /**
- * Modelo Lugar.
+ * Clase utilizada para manejar los datos de un Lugar
+ *
  * @author David Cuevas Cano
  */
 public class Lugar {
@@ -18,7 +19,8 @@ public class Lugar {
     private TipoLugar tipo;
 
     /**
-     * Instancia un nuevo Lugar.
+     * Constructor vacio de la clase Lugar
+     * Inicializa {@link #fecha}, {@link #posicion} y {@link #tipo}
      */
     public Lugar() {
         fecha = System.currentTimeMillis();
@@ -27,15 +29,16 @@ public class Lugar {
     }
 
     /**
-     * @param nombre
-     * @param direccion
-     * @param longitud
-     * @param latitud
-     * @param tipo
-     * @param telefono
-     * @param url
-     * @param comentario
-     * @param valoracion
+     * Constructor de Lugar con los respectivos parámetros
+     * @param nombre     Nombre del Lugar
+     * @param direccion  Dirección del Lugar
+     * @param longitud   Longitud del Lugar
+     * @param latitud    Latitud del Lugar
+     * @param tipo       Tipo que hace mención a la clase TipoLugar que es un enum
+     * @param telefono   Teléfono del Lugar
+     * @param url        Url para la web del Lugar
+     * @param comentario Comentario del Lugar
+     * @param valoracion Valoración del Lugar
      */
     public Lugar(String nombre, String direccion, double longitud,
                  double latitud, TipoLugar tipo, int telefono,
@@ -145,6 +148,11 @@ public class Lugar {
         this.tipo = tipo;
     }
 
+    /**
+     * Método toString para convertir un objeto en String en el formato que definimos
+     *
+     * @return String de Lugar
+     */
     @Override
     public String toString() {
         return "Lugar{" +

@@ -5,8 +5,7 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 
 /**
- * PreferenciasActivity que hace uso de PreferenciasFragment
- * @author David Cuevas Cano
+ * Actividad que simplemente muestra {@link PreferenciasFragment}
  */
 public class PreferenciasActivity extends AppCompatActivity {
     @Override

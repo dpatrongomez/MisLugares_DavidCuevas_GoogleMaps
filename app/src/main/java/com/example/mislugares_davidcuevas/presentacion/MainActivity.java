@@ -29,8 +29,7 @@ import com.example.mislugares_davidcuevas.mapas.MapsActivity;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 /**
- * Clase Main donde se inicializa el RecycleView
- * @author David Cuevas Cano
+ * Clase MainActivity que es la encargada de mostrar la pantalla principal
  */
 public class MainActivity extends AppCompatActivity {
     private LugaresBD lugares;
@@ -44,6 +43,11 @@ public class MainActivity extends AppCompatActivity {
     private static final int SOLICITUD_PERMISO_LOCALIZACION = 1;
     private CasoUsoLocalizacion usoLocalizacion;
 
+    /**
+     * Método para inicializar el layout, los listener y llenar las demás clases
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,6 +79,9 @@ public class MainActivity extends AppCompatActivity {
         });
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        /**
+         * Método para inicializar los listener, en este el del floating button para que cuando lo pulsemos llame al método de crear un nuevo Lugar
+         */
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -122,7 +129,12 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
+    /**
+     * Método para crear el menú superior con el menú establecido en el xml
+     *
+     * @param menu
+     * @return true
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -130,6 +142,12 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * Método para definir las acciones de cada elemento del menú
+     *
+     * @param item
+     * @return true
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -155,7 +173,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Lanzar preferencias.
+     * Método para lanzar el Activity de Preferencias
+     *
+     * @param view
      */
     public void LanzarPreferencias(){
         Intent i = new Intent(this, PreferenciasActivity.class);
@@ -163,7 +183,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Lanzar acerca de.
+     * Lanza la clase acerca de.
      */
     public void LanzarAcercaDe(){
         Intent acercaDe = new Intent(MainActivity.this, AcercaDeActivity.class);
@@ -171,7 +191,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Lanzar vista lugar.
+     * Método para abrir un Diálogo para escribir el id del lugar que quieres visualizar
+     *
+     * @param view
      */
     public void lanzarVistaLugar(){
         final EditText entrada = new EditText(this);
@@ -190,7 +212,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Lanzar mapa.
+     * Lanza la clase que visualiza el mapa.
      */
     public void LanzarMapa(){
         Intent mapa = new Intent(MainActivity.this, MapsActivity.class);
@@ -198,7 +220,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Inicializar recyclerView.
+     * Método para inicializar la ReciclerView con su respectiva layout y adaptador
      */
     public void inicializarReciclerView() {
         recyclerView = findViewById(R.id.recycler_view);
@@ -207,6 +229,14 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(adaptador);
     }
 
+
+    /**
+     * Método para controlar los permisos necesarios
+     *
+     * @param requestCode
+     * @param permissions
+     * @param grantResults
+     */
     @Override public void onRequestPermissionsResult(int requestCode,
                                                      String[] permissions, int[] grantResults) {
         if (requestCode == SOLICITUD_PERMISO_LOCALIZACION
@@ -216,16 +246,31 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
+    /**
+     * Método que activa la localización cuando vuelve a estar en primer plano
+     */
     @Override protected void onResume() {
         super.onResume();
         usoLocalizacion.activar();
     }
 
+
+    /**
+     * Método que desactiva la localización cuando se pausa la app
+     */
     @Override protected void onPause() {
         super.onPause();
         usoLocalizacion.desactivar();
     }
+
+
+    /**
+     * Método que se llama cuando una activity se completa, desde aquí se controla el evento de modificar la configuración en preferencias
+     *
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
     @Override protected void onActivityResult(int requestCode, int resultCode,
                                               Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

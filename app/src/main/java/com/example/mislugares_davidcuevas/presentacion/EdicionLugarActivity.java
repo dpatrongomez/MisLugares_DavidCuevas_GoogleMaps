@@ -19,8 +19,15 @@ import com.example.mislugares_davidcuevas.modelo.TipoLugar;
 
 
 /**
- * Clase EdicionLugarActivity
- * @author David Cuevas Cano
+ * Clase para controlar la actividad del formulario de edicion_lugar, sus elementos
+ * y el control de eventos. En el oncreate recogemos el id lugar correspondiente para apuntar desde
+ * un cursor a la coleccion de datos desde el RecycleView. Una vez relaccionados los datos
+ * realizamos las actualizaciones correspondientes. Este formulario tiene doble funcionalidad
+ * ya que lo utilizamos tanto para edición del lugar como para crear uno nuevo. Controlamos
+ * esta posibilidad mediante el id -1 que nos indica que no hemos seleccionado un cursor
+ * desde la actividad principal sino que hemos seleccionado la opción de crear uno nuevo
+ * @see androidx.appcompat.app.AppCompatActivity
+ *
  */
 public class EdicionLugarActivity extends AppCompatActivity {
     private LugaresBD lugares;
@@ -33,7 +40,18 @@ public class EdicionLugarActivity extends AppCompatActivity {
     private int _id;
 
 
-
+    /**
+     * Inicializa los componentes de la actividad. El argumento Bundle
+     * contiene el estado ya guardado de la actividad.
+     * Si la actividad nunca ha existido, el valor del objeto Bundle es nulo.
+     * <p>
+     * muestra la configuración básica de la actividad, como declarar
+     * la interfaz de usuario (definida en un archivo XML de diseño),
+     * definir las variables de miembro y configurar parte de la IU
+     * </p>
+     *
+     * @param savedInstanceState objeto Bundle que contiene el estado de la actividad.
+     */
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.edicion_lugar);
@@ -54,7 +72,7 @@ public class EdicionLugarActivity extends AppCompatActivity {
     }
 
     /**
-     * Actualiza vistas.
+     * Actualización de los componentes de la aplicación con las propiedades de la posición del lugar correspondiente.
      */
     public void actualizaVistas() {
         nombre = findViewById(R.id.nombree);
@@ -76,11 +94,28 @@ public class EdicionLugarActivity extends AppCompatActivity {
         tipo.setSelection(lugar.getTipo().ordinal());
     }
 
+    /**
+     * Método implementado para gestionar el recurso de menú (definido en XML)
+     * hacia el Menu proporcionado en la devolución de llamada.
+     * <p>
+     * Cuando comienza la actividad, para mostrar los elementos de la barra de app.
+     * </p>
+     *
+     * @param menu proporcionado en el XML para muestra los elementos de la barra.
+     * @return boolean que devuelve true en el caso de que se haya podido cargar la barra correctamente.
+     */
     public boolean onCreateOptionsMenu(Menu menu){
         getMenuInflater().inflate(R.menu.edicion_lugar, menu);
         return true;
     }
 
+    /**
+     * Gestionamos el MenuItem seleccionado por el usuario. Recogemos el id del menu (definido por el atributo android:id)
+     * en el recurso del menú para realizar la accion correspondiente.
+     *
+     * @param item ID único del elemento de menú
+     * @return boolean donde controlamos que se ha escogido una opción válida del menú.
+     */
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.cancelar:

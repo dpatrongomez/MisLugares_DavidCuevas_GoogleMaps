@@ -34,8 +34,10 @@ import java.net.URL;
 import static com.example.mislugares_davidcuevas.presentacion.VistaLugarActivity.RESULTADO_GALERIA;
 
 /**
- * Casos de uso en lugares
- * @author David Cuevas Cano
+ * Clase donde se realiza las operaciones habituales de los lugares
+ * hacia la base de datos SQLite(Guardado , borrado y Modificado) o
+ * eventos que se realizan en las vistas de la aplicacion (Mostrar lugares ,
+ * Mostrar Mapa , Llamada,visualizar web y etc)
  */
 public class CasosUsoLugar {
     private Activity actividad;
@@ -44,6 +46,13 @@ public class CasosUsoLugar {
 
 
     /**
+     * Constructor de clase que recibe el contestodo de la actividad que lo usa , un Repositorio de Lugares
+     * y el Adaptador de la Base e datos SQLite, inicializando las variables de esta clase.
+     *
+     * @see RepositorioLugares
+     * @see LugaresBD
+     * @see AdaptadorLugaresBD
+     *
      * @param actividad
      * @param lugares
      * @param adaptador
@@ -56,8 +65,8 @@ public class CasosUsoLugar {
 
 
     /**
-     * Mostrar.
-     *
+     * Recibe la posicion del lugar y envia un intent con esa posicion a
+     * VistaLugarActivity para que se inicie la actividad y muestre ese lugar.
      * @param pos
      */
     public void mostrar(int pos) {
@@ -68,9 +77,11 @@ public class CasosUsoLugar {
 
 
     /**
-     * Borrar.
-     *
-     * @param id
+     * Metodo que recibe el id de un lugar y llama al metodo Lugares.borrar()
+     * para eliminarlo de la base de datos, despues extrae el cursor de lugaresBD para
+     * que el RecicleeView actualice los datos en el MainActivity.
+     * @see LugaresBD#borrar(int)
+     * @param id del lugar en la base de datos.
      */
     public void borrar(final int id) {
         new AlertDialog.Builder(actividad)
@@ -92,10 +103,13 @@ public class CasosUsoLugar {
     }
 
     /**
-     * Editar.
+     * Metodo que recibe un ID del Lugar que se quiere editar y llamara a la actividad
+     * EdicionLugarActivity para mostrar los campos modificables del lugar y sus datos ,
+     * siempre y cuando el lugar no sea nuevo pues si no se mostraran vacios para que el
+     * usuario los rellene.
      *
-     * @param pos
-     * @param codidoSolicitud
+     * @param pos Corresponde al Identificador del lugar de la base de datos.
+     * @param codidoSolicitud Para actualizar la vista de lugar a traves del onActivityResult de la actividad.
      */
     public void editar(int pos, int codidoSolicitud) {
         Intent i = new Intent(actividad, EdicionLugarActivity.class);
@@ -104,10 +118,11 @@ public class CasosUsoLugar {
     }
 
     /**
-     * Guardar.
-     *
-     * @param id
-     * @param nuevoLugar
+     * Metodo recibe un Lugar y un ID , que guardara los cambios que se hayan realizado
+     * en Lugar al que corresponda al ID que ha recibido.
+     * @see LugaresBD#actualiza(int, Lugar)
+     * @param id  identificador del lugar en la base datos SQLite
+     * @param nuevoLugar Lugar con datos modificados que se van a guardar.
      */
     public void guardar(int id, Lugar nuevoLugar) {
         lugares.actualiza(id, nuevoLugar);
@@ -127,8 +142,7 @@ public class CasosUsoLugar {
     }
 
     /**
-     * Compartir.
-     *
+     * Compartir el lugar a traves de la aplicacion que el usuario eliga a traves de un intent.
      * @param lugar
      */
     public void compartir(Lugar lugar) {
@@ -141,8 +155,8 @@ public class CasosUsoLugar {
 
 
     /**
-     * Llamar telefono.
-     *
+     * Metodo que recibira el lugar y atraves de un intent abrira el dial de llamadas
+     * para llamar al telefono de contacto del lugar.
      * @param lugar
      */
     public void llamarTelefono(Lugar lugar) {
@@ -152,8 +166,7 @@ public class CasosUsoLugar {
 
 
     /**
-     * Ver pg web.
-     *
+     * Metodo que Abrira la web del lugar en el navegador del telefono.
      * @param lugar
      */
     public void verPgWeb(Lugar lugar) {
@@ -163,8 +176,7 @@ public class CasosUsoLugar {
 
 
     /**
-     * Ver mapa.
-     *
+     * Mostrara la ubicacion del lugar en google maps.
      * @param lugar
      */
     public void verMapa(Lugar lugar) {
@@ -178,8 +190,6 @@ public class CasosUsoLugar {
 
 
     /**
-     * Poner foto.
-     *
      * @param pos
      * @param uri
      * @param imageView
@@ -193,9 +203,10 @@ public class CasosUsoLugar {
 
 
     /**
-     * Galeria.
-     *
-     * @param view
+     * Metodo que abre la galeria del telefono para seleccionar una imagen y la URI es enviada
+     * a traves de un intent
+     * @param view View Vista
+     * @param RES int Resultado de la operacion
      */
     public void galeria(View view) {
         String action;
@@ -213,10 +224,10 @@ public class CasosUsoLugar {
 
 
     /**
-     * Visualizar foto.
-     *
-     * @param lugar
-     * @param imageView
+     * Visualiza la foto en la ImageView pasa por parametro.
+     * @see VistaLugarActivity
+     * @param lugar lugar
+     * @param imageView  ImageView
      */
     public void visualizarFoto(Lugar lugar, ImageView imageView) {
         if (lugar.getFoto() != null && !lugar.getFoto().isEmpty()) {
@@ -228,10 +239,11 @@ public class CasosUsoLugar {
 
 
     /**
-     * Tomar foto uri.
+     * Abre la aplicacion de la camara del movil para tomar una foto , cuando
+     * la foto ha sido tomada devuelve la URI de  la imagen.
      *
      * @param codidoSolicitud
-     * @return  uri
+     * @return Uri de la imagen
      */
     public Uri tomarFoto(int codidoSolicitud) {
         try {
@@ -294,7 +306,7 @@ public class CasosUsoLugar {
     }
 
     /**
-     * Metodo para crear un uevo lugar
+     * Metodo que creara un nuevo lugar  y abrira EdicionLugar para que insertemos los datos iniciales
      */
     public void nuevo() {
         int id = lugares.nuevo();

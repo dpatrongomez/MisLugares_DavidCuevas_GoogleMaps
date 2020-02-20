@@ -4,8 +4,7 @@ package com.example.mislugares_davidcuevas.modelo;
 import com.example.mislugares_davidcuevas.R;
 
 /**
- * @author David Cuevas Cano
- * Distintos tipos de lugares para la hora de crear uno nuevo
+ * Listado de los Tipos con su respectivo icono
  */
 public enum TipoLugar {
     OTROS ("Otros", R.drawable.otros),
@@ -23,6 +22,10 @@ public enum TipoLugar {
     private final String texto;
     private final int recurso;
 
+    /**
+     * @param texto
+     * @param recurso
+     */
     TipoLugar(String texto, int recurso) {
         this.texto = texto;
         this.recurso = recurso;
@@ -36,6 +39,11 @@ public enum TipoLugar {
         return recurso;
     }
 
+    /**
+     * Getter para obtener un array de los Nombres
+     *
+     * @return Array de nombres
+     */
     public static String[] getNombres() {
         String[] resultado = new String[TipoLugar.values().length];
         for (TipoLugar tipo : TipoLugar.values()) {

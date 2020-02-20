@@ -13,7 +13,6 @@ import androidx.fragment.app.FragmentActivity;
 import com.example.mislugares_davidcuevas.R;
 import com.example.mislugares_davidcuevas.adaptadores.AdaptadorLugaresBD;
 import com.example.mislugares_davidcuevas.casos_uso.CasoUsoLocalizacion;
-import com.example.mislugares_davidcuevas.datos.LugaresBD;
 import com.example.mislugares_davidcuevas.modelo.GeoPunto;
 import com.example.mislugares_davidcuevas.modelo.Lugar;
 import com.example.mislugares_davidcuevas.presentacion.Aplicacion;
@@ -28,7 +27,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 /**
- * Mapas
+ * FragmentActivity sobre el que vamos a cargar nuestro mapa de la API de Google Maps
  * @author David Cuevas Cano
  */
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback, GoogleMap.OnInfoWindowClickListener {
@@ -39,7 +38,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private static final int SOLICITUD_PERMISO_LOCALIZACION = 1;
     private Context contexto;
 
-
+    /**
+     * Este metodo inicializa el layout, el adaptador y el mapa
+     *
+     * @param savedInstanceState
+     */
     @Override public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mapa);
@@ -52,35 +55,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     /**
+     * Este método se va a llamar cuando el mapa este listo para usarse y Obtengamos un objeto GoogleMap no nulo
      *
      * @param googleMap
-     * Prepara el mapa y lo muestra con las marcas que existen de los lugares
      */
-
     @Override public void onMapReady(GoogleMap googleMap) {
         maps = googleMap;
 
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(contexto);
 
-        /*witch (pref.getString("tipoMap", "tiposMapaValores")) {
-            case "0":
-                maps.setMapType(googleMap.MAP_TYPE_NORMAL);
-                break;
-            case "1":
-                maps.setMapType(googleMap.MAP_TYPE_SATELLITE);
-                break;
-
-            case "2":
-                maps.setMapType(googleMap.MAP_TYPE_TERRAIN);
-                break;
-            case "3":
-                maps.setMapType(googleMap.MAP_TYPE_HYBRID);
-                break;
-            default:
-                maps.setMapType(googleMap.MAP_TYPE_NORMAL);
-                break;
-        }*/
-        maps.setMapType(Integer.valueOf(pref.getString("tipoMap", "tiposMapaValores")));
+        maps.setMapType(Integer.parseInt(pref.getString("tipoMap", "1")));
 
         if (usoLocalizacion.hayPermisoLocalizacion()) {
             maps.setMyLocationEnabled(true);
@@ -111,8 +95,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     /**
+     * Evento que lanza una actividad {@link VistaLugarActivity} cuando se pulsa algun lugar marcado en el mapa
+     *
      * @param marker
-     * Muestra informacion de la marca pulsada
      */
     @Override
     public void onInfoWindowClick(Marker marker) {

@@ -7,8 +7,9 @@ import com.example.mislugares_davidcuevas.modelo.Lugar;
 import com.example.mislugares_davidcuevas.modelo.RepositorioLugares;
 
 /**
- * Adaptador de base de datos
- * @author David Cuevas Cano
+ * Clase para adaptar la base de datos a nuestra app
+ * para que se guarden tanto los cambios que realicemos en los lugares
+ * como cuando creamos un nuevo lugar
  */
 public class AdaptadorLugaresBD extends AdaptadorLugares  {
 
@@ -16,6 +17,7 @@ public class AdaptadorLugaresBD extends AdaptadorLugares  {
     protected Cursor cursor;
 
     /**
+     * Constructor para inicializar el cursor de la clase
      * @param lugares
      * @param cursor
      */
@@ -24,22 +26,18 @@ public class AdaptadorLugaresBD extends AdaptadorLugares  {
         this.cursor = cursor;
     }
 
-    /**
-     * @return cursor
-     */
+
     public Cursor getCursor() {
         return cursor;
     }
 
-    /**
-     * @param cursor
-     */
+
     public void setCursor(Cursor cursor) {
         this.cursor = cursor;
     }
 
     /**
-     * Lugar posicion lugar.
+     * Devuelve el lugar a partir de la posición
      *
      * @param posicion
      * @return lugar
@@ -50,8 +48,9 @@ public class AdaptadorLugaresBD extends AdaptadorLugares  {
     }
 
     /**
+     * Devuelve el ID del lugar dependiendo de la posición que ocupe este en la base de datos
      * @param posicion
-     * @return int
+     * @return id del lugar
      */
     public int idPosicion(int posicion) {
         cursor.moveToPosition(posicion);
@@ -59,8 +58,9 @@ public class AdaptadorLugaresBD extends AdaptadorLugares  {
     }
 
     /**
+     * Método que muestra la posición a partir del ID del lugar
      * @param id
-     * @return int
+     * @return posición del lugar
      */
     public int posicionId(int id) {
         int pos = 0;
@@ -73,6 +73,11 @@ public class AdaptadorLugaresBD extends AdaptadorLugares  {
         }
     }
 
+    /**
+     * Método que actualiza los ViewHolder a partir de la posicion del elemento
+     * @param holder
+     * @param posicion
+     */
     @Override
     public void onBindViewHolder(ViewHolder holder, int posicion) {
         Lugar lugar = lugarPosicion(posicion);
@@ -80,10 +85,10 @@ public class AdaptadorLugaresBD extends AdaptadorLugares  {
         holder.itemView.setTag(new Integer(posicion));
     }
 
+    /**
+     * Devuelve el número total de elementos en el conjunto de datos
+     */
     @Override public int getItemCount() {
         return cursor.getCount();
     }
-
-
-
 }

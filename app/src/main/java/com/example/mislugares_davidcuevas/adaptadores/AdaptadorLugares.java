@@ -16,9 +16,7 @@ import com.example.mislugares_davidcuevas.modelo.RepositorioLugares;
 import com.example.mislugares_davidcuevas.presentacion.Aplicacion;
 
 /**
- * Adaptador lugares.
- * @author David Cuevas Cano
- * @version 1.1.1
+ * Clase para adaptar la información de los lugares para poder mostrarla en el RecycleView
  * @see androidx.recyclerview.widget.RecyclerView.Adapter
  *
  */
@@ -34,7 +32,7 @@ public class AdaptadorLugares  extends RecyclerView.Adapter<AdaptadorLugares.Vie
     }
 
     /**
-     * View Holder de RecycleView
+     * Instancia de elementos a mostrar en el RecycleView
      */
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
@@ -47,6 +45,7 @@ public class AdaptadorLugares  extends RecyclerView.Adapter<AdaptadorLugares.Vie
         public TextView distancia;
 
         /**
+         * Método que permite visualizar los elementos seleccionados en la vista RecycleView
          * @param itemView
          */
         public ViewHolder(View itemView) {
@@ -59,7 +58,8 @@ public class AdaptadorLugares  extends RecyclerView.Adapter<AdaptadorLugares.Vie
         }
 
         /**
-         * Personaliza.
+         * Método que permite seleccionar el tipo de icono que va a tener nuestro lugar,
+         * ponerle una valoración al lugar, obtener la distancia a la que se encuentra de tu posición
          *
          * @param lugar
          */
@@ -95,7 +95,12 @@ public class AdaptadorLugares  extends RecyclerView.Adapter<AdaptadorLugares.Vie
         }
     }
 
-
+    /**
+     * Crea un ViewHolder e inicializa los campos siguiendo el diseño de elementolista.xml
+     * @param parent
+     * @param viewType
+     * @return
+     */
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         // Inflamos la vista desde el xml
@@ -106,13 +111,20 @@ public class AdaptadorLugares  extends RecyclerView.Adapter<AdaptadorLugares.Vie
 
     }
 
-
+    /**
+     * Método que actualiza los ViewHolder a partir de la posicion del elemento
+     * @param holder
+     * @param posicion
+     */
     @Override
     public void onBindViewHolder(ViewHolder holder, int posicion) {
         Lugar lugar = lugares.elemento(posicion);
         holder.personaliza(lugar);
     }
 
+    /**
+     * Devuelve el número total de elementos en el conjunto de datos
+     */
     @Override public int getItemCount() {
         return lugares.tamanyo();
     }

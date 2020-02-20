@@ -15,20 +15,27 @@ import com.example.mislugares_davidcuevas.modelo.TipoLugar;
 import com.example.mislugares_davidcuevas.presentacion.Aplicacion;
 
 /**
- * Base de datos Lugares bd.
- * @author David Cuevas Cano
+ * Clase que crea  la base de datos si no existe y que contiene
+ * operaciones basicas con la base dedatos SQLite
  */
 public class LugaresBD extends SQLiteOpenHelper implements RepositorioLugares {
 
 
     Context contexto;
 
-
+    /**
+     * Inilizacion de la clase
+     * @param contexto  Contexto
+     */
     public LugaresBD(Context contexto) {
         super(contexto, "lugares", null, 1);
         this.contexto = contexto;
     }
 
+    /**
+     * Crea la base de datos si no esta creada ya.
+     * @param bd base datos
+     */
     @Override public void onCreate(SQLiteDatabase bd) {
         bd.execSQL("CREATE TABLE lugares ("+
                 "_id INTEGER PRIMARY KEY AUTOINCREMENT, "+
@@ -73,15 +80,20 @@ public class LugaresBD extends SQLiteOpenHelper implements RepositorioLugares {
                 System.currentTimeMillis() +", 2.0)");
     }
 
+    /**
+     * Actualizar base de datos a una nueva version
+     * @param db base de datos
+     * @param oldVersion Version vieja de la base de datos.
+     * @param newVersion Version nueva de la base de datos.
+     */
     @Override public void onUpgrade(SQLiteDatabase db, int oldVersion,
                                     int newVersion) {
     }
 
     /**
-     * Extrae lugar.
-     *
-     * @param cursor
-     * @return lugar
+     * Extrae lugar de un cursor
+     * @param cursor the cursor
+     * @return Lugar
      */
     public static Lugar extraeLugar(Cursor cursor) {
         Lugar lugar = new Lugar();
@@ -100,9 +112,8 @@ public class LugaresBD extends SQLiteOpenHelper implements RepositorioLugares {
     }
 
     /**
-     * Extrae cursor.
-     *
-     * @return cursor
+     * Extrae el cursor.
+     * @return Cursor
      */
     public Cursor extraeCursor() {
         SharedPreferences pref =
@@ -130,6 +141,11 @@ public class LugaresBD extends SQLiteOpenHelper implements RepositorioLugares {
         return bd.rawQuery(consulta, null);
     }
 
+    /**
+     * Recibe identificador y devuelve el lugar correspondiente a él.
+     * @param id identificador de lugar
+     * @return
+     */
     @Override public Lugar elemento(int id) {
         Cursor cursor = getReadableDatabase().rawQuery(
                 "SELECT * FROM lugares WHERE _id = " + id, null);
@@ -145,6 +161,10 @@ public class LugaresBD extends SQLiteOpenHelper implements RepositorioLugares {
         }
     }
 
+    /**
+     * Crea un nuevo lugar vacio y devuelve su identificador correspondiente
+     * @return  tipo int ,  identificador del nuevo lugar.
+     */
     @Override public int nuevo() {
         int _id = -1;
         Lugar lugar = new Lugar();
@@ -162,6 +182,12 @@ public class LugaresBD extends SQLiteOpenHelper implements RepositorioLugares {
     }
 
 
+    /**
+     * Recibe el lugar que va actualizar y el id que lo identifica en la base de datos
+     * para poder actualizar.
+     * @param id identificador del lugar
+     * @param lugar Lugar que recibe con los nuevos datos.
+     */
     @Override public void actualiza(int id, Lugar lugar) {
         getWritableDatabase().execSQL("UPDATE lugares SET" +
                 "   nombre = '" + lugar.getNombre() +
@@ -178,14 +204,25 @@ public class LugaresBD extends SQLiteOpenHelper implements RepositorioLugares {
                 " WHERE _id = " + id);
     }
 
+    /**
+     * @param lugar
+     */
     public void aniade(Lugar lugar) {
 
     }
 
+    /**
+     * Borrar Lugar  al que corresponde el id pasado por parametro
+     * @param id int , correspondiente al identificador del lugar
+     */
     public void borrar(int id) {
         getWritableDatabase().execSQL("DELETE FROM lugares WHERE _id = " + id);
     }
 
+    /**
+     * Retorna el numero de lugares que tiene la base de datos.
+     * @return tamanyo tipo int.
+     */
     @Override
     public int tamanyo() {
         return 0;

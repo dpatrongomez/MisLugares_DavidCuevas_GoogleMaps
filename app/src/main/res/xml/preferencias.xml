@@ -26,6 +26,6 @@
         android:summary="Seleccion del tipo de mapa"
         android:entries="@array/tiposMapa"
         android:entryValues="@array/tiposMapaValores"
-        android:defaultValue="0"/>
+        android:defaultValue="1"/>
 
 </PreferenceScreen>

@@ -34,8 +34,11 @@ import java.util.Date;
 
 
 /**
- * Clase VistaLugarActivity que extiende de AppCompatActivity
- * @author David Cuevas Cano
+ * Clase para controlar la actividad del formulario de vista_lugar, sus elementos
+ * y el control de eventos. En el oncreate recogemos el id lugar correspondiente para apuntar desde
+ * un cursor a la coleccion de datos desde el RecycleView.
+ * @see androidx.appcompat.app.AppCompatActivity
+ *
  */
 public class VistaLugarActivity extends AppCompatActivity {
     private LugaresBD lugares;
@@ -59,8 +62,6 @@ public class VistaLugarActivity extends AppCompatActivity {
 
     private Activity actividad;
 
-
-
     public final Calendar c = Calendar.getInstance();
 
     int mes = c.get(Calendar.MONTH);
@@ -75,7 +76,6 @@ public class VistaLugarActivity extends AppCompatActivity {
 
     int segundos = c.get(Calendar.SECOND);
 
-
     ImageButton icono_hora, icono_fecha;
 
     TextView txtFecha;
@@ -83,6 +83,18 @@ public class VistaLugarActivity extends AppCompatActivity {
     TextView txtHora;
 
 
+    /**
+     * Inicializa los componentes de la actividad. El argumento Bundle
+     * contiene el estado ya guardado de la actividad.
+     * Si la actividad nunca ha existido, el valor del objeto Bundle es nulo.
+     * <p>
+     * muestra la configuración básica de la actividad, como declarar
+     * la interfaz de usuario (definida en un archivo XML de diseño),
+     * definir las variables de miembro y configurar parte de la IU
+     * </p>
+     *
+     * @param savedInstanceState objeto Bundle que contiene el estado de la actividad.
+     */
     @Override protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.vista_lugar);
@@ -123,15 +135,30 @@ public class VistaLugarActivity extends AppCompatActivity {
             TextView telefono = findViewById(R.id.telefono);
             telefono.setText(Integer.toString(lugar.getTelefono()));
         }
-
-
-
     }
+
+    /**
+     * Método implementado para gestionar el recurso de menú (definido en XML)
+     * hacia el Menu proporcionado en la devolución de llamada.
+     * <p>
+     * Cuando comienza la actividad, para mostrar los elementos de la barra de app.
+     * </p>
+     *
+     * @param menu proporcionado en el XML para muestra los elementos de la barra.
+     * @return boolean que devuelve true en el caso de que se haya podido cargar la barra correctamente.
+     */
     @Override public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.vista_lugar, menu);
         return true;
     }
 
+    /**
+     * Gestionamos el MenuItem seleccionado por el usuario. Recogemos el id del menu (definido por el atributo android:id)
+     * en el recurso del menú para realizar la accion correspondiente.
+     *
+     * @param item ID único del elemento de menú
+     * @return boolean donde controlamos que se ha escogido una opción válida del menú.
+     */
     @Override public boolean onOptionsItemSelected(MenuItem item) {
 
         switch (item.getItemId()) {
@@ -158,7 +185,8 @@ public class VistaLugarActivity extends AppCompatActivity {
     }
 
     /**
-     * Inicializamos las vistas que contiene la clase
+     * Actualización de los componentes de la aplicación con las propiedades de la posición del lugar correspondiente.
+     * Se añade un listener para controlar la modificación del ratingBar de la valoración del lugar proporcionada por el usuario
      */
     public void actualizaVistas() {
         TextView nombre = findViewById(R.id.nombre);
@@ -196,7 +224,10 @@ public class VistaLugarActivity extends AppCompatActivity {
 
 
     /**
-     * Iniciamos listener para el uso de cámara, galería, ver paginas web, etc..
+     * Inicializa cada uno de los listener correspondientes a los componentes de la actividad
+     * Cada uno gestiona un evento en el caso de que el usuario haga click en ver el mapa, acceder a la
+     * URL de la página web, acceso a la galeria, a ver la foto, llamar por teléfono y eliminar la foto
+     * gestionado en los casos de uso de la clase CasosUsoLugar.
      */
     public void inicializarListener () {
         LinearLayout lmap = findViewById(R.id.LinearMapa);
@@ -205,6 +236,13 @@ public class VistaLugarActivity extends AppCompatActivity {
         ImageView galeria = (ImageView) findViewById(R.id.galeria);
         final ImageView camara = (ImageView) findViewById(R.id.camara);
         final ImageView eliminarFoto = (ImageView) findViewById(R.id.eliminarfoto);
+
+        /**
+         * Acceso al mapa mediante el objeto View, que representa el manejo de eventos de la interfaz de usuario.
+         *
+         * @param view lugar que accedemos desde la ventana principal recogido en el oncreate. Mediante él accedemos
+         *             a la latitud y longitud triangular la posición
+         */
         lmap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -212,6 +250,12 @@ public class VistaLugarActivity extends AppCompatActivity {
             }
         });
 
+        /**
+         * Accedemos a la página web del lugar y abrimos su URL en el navegador
+         *
+         * @param view lugar que accedemos desde la ventana principal recogido en el oncreate. Mediante él accedemos
+         *             a la URL del sitio.
+         */
         lweb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -219,6 +263,12 @@ public class VistaLugarActivity extends AppCompatActivity {
             }
         });
 
+        /**
+         * Recogemos el teléfono de la base de datos y abrimos una ventana para poder llamarlo
+         *
+         * @param view lugar que accedemos desde la ventana principal recogido en el oncreate. Mediante él accedemos
+         *             al teléfono del lugar con el objeto View.
+         */
         ltelefono.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -226,7 +276,12 @@ public class VistaLugarActivity extends AppCompatActivity {
             }
         });
 
-
+        /**
+         * Accedemos a la galeria del dispositivo con los permisos necesarios y actualizamos la foto del sitio.
+         *
+         * @param view lugar que accedemos desde la ventana principal recogido en el oncreate. Mediante él accedemos
+         *             y modificamos la foto.
+         */
         galeria.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -235,11 +290,16 @@ public class VistaLugarActivity extends AppCompatActivity {
             }
         });
 
+        /**
+         * Solicitados los permisos de acceso a cámara. Mostramos la cámara de fotos del móvil para hacer una foto en tiempo real
+         * y almacenarla
+         *
+         * @param view lugar que accedemos desde la ventana principal recogido en el oncreate. Mediante él accedemos
+         *             al registro de la foto.
+         */
         camara.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
                 if (!usoAlmacenamiento.hayPermisoAlmacenamientoEscritura()) {
                 uriUltimaFoto = usoLugar.tomarFoto(RESULTADO_FOTO);
                 }else {
@@ -248,6 +308,13 @@ public class VistaLugarActivity extends AppCompatActivity {
                 }
             }
         });
+
+        /**
+         * Requiere permisos de lectura y escritura para poder eliminar la foto relaccionada al sitio.
+         *
+         * @param view lugar que accedemos desde la ventana principal recogido en el oncreate. Mediante él accedemos
+         *             y eliminamos la foto.
+         */
         eliminarFoto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -288,7 +355,16 @@ public class VistaLugarActivity extends AppCompatActivity {
     }
 
     /**
-     * Resultado de la accion de botones de galeria foto y editar
+     * Resultado específico cuando el usuario termina con la actividad subsiguiente y regresa a la actividad
+     *
+     * @param requestCode código de petición especificada por la segunda actividad
+     *                    (se trata de RESULTADO_EDITAR si el usuario selecciona la edición del lugar,
+     *                    RESULTADO_GALERIAS si el usuario importa nuevas fotos de su galeria y RESULTADO_FOTO
+     *                    si el usuario realiza una foto con los permisos de la app)
+     * @param resultCode  código de resultado especificado por la segunda actividad
+     *                    (se trata de RESULT_OK si se realizó la operación de manera correcta
+     *                    o de RESULT_CANCELED si se retiró el usuario o falló la operación por algún motivo)
+     * @param data        Intent que proporciona los datos del resultado
      */
     @Override protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -314,7 +390,14 @@ public class VistaLugarActivity extends AppCompatActivity {
 
 
     /**
-     * Obtener fecha y sobreescribimos en la base de datos
+     * Obtenemos la fecha con un cuadro de diálogo es un tipo de ventana emergente
+     * que solicita al usuario de la aplicación.
+     * <p>
+     * Permite modificar el año, el mes y el día.
+     * Mediante DatePickerDialog seleccionamos la fecha en milisegundos con un objeto de tipo Long.
+     * Finalmente, mostramos el diálogo llamando al método show(). Este método utiliza dos parámetros:
+     * el manejador de fragments y una etiqueta que identificará el cuadro de diálogo.
+     * </p>
      */
     public void obtenerFecha(){
         DatePickerDialog recogerFecha = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
@@ -349,7 +432,14 @@ public class VistaLugarActivity extends AppCompatActivity {
     }
 
     /**
-     * Obtener hora y sobreescribimos en la base de datos
+     * Obtenemos la hora y los minutos con un cuadro de diálogo es un tipo de ventana emergente
+     * que solicita al usuario de la aplicación.
+     * <p>
+     * Permite modificar la hora y los minutos.
+     * Mediante TimePickerDialog seleccionamos la hora en milisegundos con un objeto de tipo Long.
+     * Finalmente, mostramos el diálogo llamando al método show(). Este método utiliza dos parámetros:
+     * el manejador de fragments y una etiqueta que identificará el cuadro de diálogo.
+     * </p>
      */
     public void obtenerHora(){
         final TimePickerDialog recogerHora = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {

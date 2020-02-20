@@ -22,8 +22,7 @@ import com.example.mislugares_davidcuevas.presentacion.Aplicacion;
 import static android.content.Context.LOCATION_SERVICE;
 
 /**
- * Permisos para localizacion
- * @author David Cuevas Cano
+ * Clase para los permisos de localización
  */
 public class CasoUsoLocalizacion implements LocationListener, ActivityCompat.OnRequestPermissionsResultCallback {
     private static final String TAG = "MisLugares";
@@ -37,6 +36,7 @@ public class CasoUsoLocalizacion implements LocationListener, ActivityCompat.OnR
 
 
     /**
+     * Constructor para solicitar los permisos de localizacion y a la vez, inicializar la posición actual y la mejor posición conocida
      * @param actividad
      * @param codigoPermiso
      */
@@ -53,7 +53,7 @@ public class CasoUsoLocalizacion implements LocationListener, ActivityCompat.OnR
     }
 
     /**
-     * Si devuelve true es que la app tiene permisos de localizacion
+     * Mñetodo que si devuelve true es que la app tiene permisos de localizacion concedidos
      *
      * @return true o false
      */
@@ -64,7 +64,7 @@ public class CasoUsoLocalizacion implements LocationListener, ActivityCompat.OnR
     }
 
     /**
-     * Ultima localizazion.
+     * Método que guarda la ultima localización conocida del terminal
      */
     @SuppressLint("MissingPermission")
     void ultimaLocalizazion(){
@@ -85,7 +85,7 @@ public class CasoUsoLocalizacion implements LocationListener, ActivityCompat.OnR
     }
 
     /**
-     * Solicitar permiso.
+     * Método que genera un dialogo para pedir que se acepten los permisos de localización de la app
      *
      * @param permiso
      * @param justificacion
@@ -120,6 +120,9 @@ public class CasoUsoLocalizacion implements LocationListener, ActivityCompat.OnR
         adaptador.notifyDataSetChanged();
     }
 
+    /**
+     * Método que activa los proveedores de GPS e Internet
+     */
     @SuppressLint("MissingPermission")
     private void activarProveedores() {
         if (hayPermisoLocalizacion()) {
@@ -137,25 +140,51 @@ public class CasoUsoLocalizacion implements LocationListener, ActivityCompat.OnR
                             " a los lugares.", codigoPermiso, actividad);
         }
     }
+
+    /**
+     * Método que actualiza la localización si el terminal se ha movido
+     * @param location
+     */
     @Override public void onLocationChanged(Location location) {
         Log.d(TAG, "Nueva localización: "+location);
         actualizaMejorLocaliz(location);
         adaptador.notifyDataSetChanged();
     }
+
+    /**
+     * Método que activa los proveedores si estos estan deshabilitados
+     * @param proveedor
+     */
     @Override public void onProviderDisabled(String proveedor) {
         Log.d(TAG, "Se deshabilita: "+proveedor);
         activarProveedores();
     }
+
+    /**
+     * Método que activa los proveedores para que no dejen de estas habilitados
+     * @param proveedor
+     */
     @Override public void onProviderEnabled(String proveedor) {
         Log.d(TAG, "Se habilita: "+proveedor);
         activarProveedores();
     }
+
+    /**
+     * Método que comprueba que la ubicación del terminal ha cambiado
+     * @param proveedor
+     * @param estado
+     * @param extras
+     */
     @Override
     public void onStatusChanged(String proveedor, int estado, Bundle extras) {
         Log.d(TAG, "Cambia estado: "+proveedor);
         activarProveedores();
     }
 
+    /**
+     * Método que actualiza a la mejor localización del terminal cada 2 minutos
+     * @param localiz
+     */
     private void actualizaMejorLocaliz(Location localiz) {
         if (localiz != null && (mejorLoc == null
                 || localiz.getAccuracy() < 2*mejorLoc.getAccuracy()
@@ -169,16 +198,27 @@ public class CasoUsoLocalizacion implements LocationListener, ActivityCompat.OnR
         }
     }
 
-
+    /**
+     * Método que activa los permisos de localización y proveedores
+     */
     public void activar() {
         if (hayPermisoLocalizacion()) activarProveedores();
     }
 
 
+    /**
+     * Método que borra las localizaciones para el ahorro de datos
+     */
     public void desactivar() {
         if (hayPermisoLocalizacion()) manejadorLoc.removeUpdates(this);
     }
 
+    /**
+     * Devuelve el resultado de pedir los permisos
+     * @param requestCode
+     * @param permissions
+     * @param grantResults
+     */
     @Override public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         if (requestCode == codigoPermiso
                 && grantResults.length == 1

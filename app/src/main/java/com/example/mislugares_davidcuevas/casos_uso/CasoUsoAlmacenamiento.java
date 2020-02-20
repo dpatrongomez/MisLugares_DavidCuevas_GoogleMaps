@@ -12,8 +12,7 @@ import androidx.fragment.app.Fragment;
 
 
 /**
- * Permisos de almacenamiento.
- * @author David Cuevas Cano
+ * Clase para los distintos permisos de almacenamiento como pueden ser de escritura como de lecutra
  */
 public class CasoUsoAlmacenamiento implements ActivityCompat.OnRequestPermissionsResultCallback {
 
@@ -24,6 +23,7 @@ public class CasoUsoAlmacenamiento implements ActivityCompat.OnRequestPermission
 
 
     /**
+     * Constructor para solicitar permisos de lectura y escritura
      * @param actividad
      * @param codigoPermiso
      */
@@ -38,7 +38,7 @@ public class CasoUsoAlmacenamiento implements ActivityCompat.OnRequestPermission
 
 
     /**
-     * Solicitar permiso.
+     * Método que genera un dialogo para pedir que se acepten los permisos de almacenamiento de la app
      *
      * @param permiso
      * @param justificacion
@@ -87,7 +87,7 @@ public class CasoUsoAlmacenamiento implements ActivityCompat.OnRequestPermission
 
 
     /**
-     * Si devuelve true, la app tiene permisos de lectura
+     * Método que si devuelve true significa que la app tiene permisos de lectura concedidos
      *
      * @return true o false
      */
@@ -99,7 +99,7 @@ public class CasoUsoAlmacenamiento implements ActivityCompat.OnRequestPermission
 
 
     /**
-     * Si devuelve true, la app tiene permisos de escritura
+     * Método que si devuelve true significa que la app tiene permisos de escritura concedidos
      *
      * @return true o false
      */
@@ -109,7 +109,12 @@ public class CasoUsoAlmacenamiento implements ActivityCompat.OnRequestPermission
                 == PackageManager.PERMISSION_GRANTED);
     }
 
-
+    /**
+     * Devuelve el resultado de pedir los permisos
+     * @param requestCode
+     * @param permissions
+     * @param grantResults
+     */
     @Override public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         if (requestCode == codigoPermiso
                 && grantResults.length == 1

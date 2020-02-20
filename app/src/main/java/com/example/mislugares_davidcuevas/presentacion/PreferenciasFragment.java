@@ -6,8 +6,9 @@ import android.preference.PreferenceFragment;
 import com.example.mislugares_davidcuevas.R;
 
 /**
- * Fragment de PreferenciasActivity
- * @author David Cuevas Cano
+ * Crea un fragment que contiene una ventana con las opciones de preferencias definidas en un recurso XML
+ *
+ * @see {@link PreferenciasActivity}
  */
 public class PreferenciasFragment extends PreferenceFragment {
     @Override

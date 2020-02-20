@@ -1,23 +1,21 @@
 package com.example.mislugares_davidcuevas.modelo;
 
 /**
- * Modelo Geo punto.
- * @author David Cuevas Cano
+ *Clase que guarda la longitud y latitud de un lugar.
  */
 public class GeoPunto {
 
     private double longitud, latitud;
 
     /**
-     * Metodo Sin posicion.
+     *Geopunto con ambas variablas "latitud" y "longitud" en 0.0
      */
     static public GeoPunto SIN_POSICION = new GeoPunto(0.0,0.0);
 
     /**
-     * Instancia un nuevo Geo punto.
-     *
-     * @param longitud the longitud
-     * @param latitud  the latitud
+     * Instantiates a new Geo punto.
+     * @param longitud loongitud tipo double
+     * @param latitud  latitud tipo double
      */
     public GeoPunto(double longitud, double latitud) {
         this.longitud= longitud;
@@ -30,9 +28,8 @@ public class GeoPunto {
 
 
     /**
-     * Distancia
-     *
-     * @param punto
+     * Calcula la distancia entre un Gepunto y el pasada por parametro.
+     * @param punto Geopunto
      * @return double
      */
     public double distancia(GeoPunto punto) {
