@@ -49,7 +49,7 @@ public class CasosUsoLugar {
      * Constructor de clase que recibe el contestodo de la actividad que lo usa , un Repositorio de Lugares
      * y el Adaptador de la Base e datos SQLite, inicializando las variables de esta clase.
      *
-     * @see RepositorioLugares
+     * @see Activity
      * @see LugaresBD
      * @see AdaptadorLugaresBD
      *
