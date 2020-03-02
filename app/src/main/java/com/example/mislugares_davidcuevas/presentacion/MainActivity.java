@@ -178,10 +178,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Método para definir las acciones de cada elemento del menú
+     * Gestionamos el MenuItem seleccionado por el usuario. Recogemos el id del menu (definido por el atributo android:id)
+     *  en el recurso del menú para realizar la accion correspondiente.
      *
-     * @param item
-     * @return true
+     * @param item ID único del elemento de menú
+     * @return boolean donde controlamos que se ha escogido una opción válida del menú.
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -209,7 +210,7 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Método para lanzar el Activity de Preferencias
-     *¡
+     *
      */
     public void LanzarPreferencias(){
         Intent i = new Intent(this, PreferenciasActivity.class);
@@ -217,7 +218,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Lanza la clase acerca de.
+     * Método para lanzar la clase acerca de.
      */
     public void LanzarAcercaDe(){
         Intent acercaDe = new Intent(MainActivity.this, AcercaDeActivity.class);
@@ -245,7 +246,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Lanza la clase que visualiza el mapa.
+     * Método para lanzar la clase que visualiza el mapa.
      */
     public void LanzarMapa(){
         Intent mapa = new Intent(MainActivity.this, MapsActivity.class);
@@ -256,10 +257,12 @@ public class MainActivity extends AppCompatActivity {
      * Método para inicializar la ReciclerView con su respectiva layout y adaptador
      * Ajustamos el tamaño a fijo
      * recyclerView.setHasFixedSize(true);
-     * Ponemos de LayoutManager un Linear
-     * recyclerView.setLayoutManager(new LinearLayoutManager(this));
-     * Y cargamos el adaptador que vamos a definir.
-     * recyclerView.setAdapter(adaptador);
+     * <p>
+     *     Ponemos de LayoutManager un Linear
+     *     recyclerView.setLayoutManager(new LinearLayoutManager(this));
+     *     Y cargamos el adaptador que vamos a definir.
+     *     recyclerView.setAdapter(adaptador);
+     * </p>
      */
     public void inicializarReciclerView() {
         recyclerView = findViewById(R.id.recycler_view);
@@ -304,11 +307,18 @@ public class MainActivity extends AppCompatActivity {
 
 
     /**
-     * Método que se llama cuando una activity se completa, desde aquí se controla el evento de modificar la configuración en preferencias
+     * Resultado específico cuando el usuario termina con la actividad subsiguiente y regresa a la actividad
      *
-     * @param requestCode
-     * @param resultCode
-     * @param data
+     * @param requestCode <p>ódigo de petición especificada por la segunda actividad
+     *                     (se trata de RESULTADO_EDITAR si el usuario selecciona la edición del lugar,
+     *                      RESULTADO_GALERIAS si el usuario importa nuevas fotos de su galeria y RESULTADO_FOTO
+     *                      si el usuario realiza una foto con los permisos de la app)</p>
+     *
+     * @param resultCode  <p>código de resultado especificado por la segunda actividad
+     *                    (se trata de RESULT_OK si se realizó la operación de manera correcta</p>
+     *                     o de RESULT_CANCELED si se retiró el usuario o falló la operación por algún motivo)
+     *
+     * @param data        <p>Intent que proporciona los datos del resultado</p>
      */
     @Override protected void onActivityResult(int requestCode, int resultCode,
                                               Intent data) {

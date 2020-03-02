@@ -80,7 +80,7 @@ public class LugaresLista implements RepositorioLugares {
 
 
     /**
-     * Método para agregar objetos Lugar al ArrayList
+     * Método para agregar ejemplos de objetos Lugar al ArrayList
      */
     public void aniadeEjemplos() {
         aniade(new Lugar("Escuela Politécnica Superior de Gandía",

@@ -171,16 +171,33 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
+    /**
+     * Se llama cuando un marcador comienza a ser arrastrado. Se puede acceder a la ubicación del marcador a través de getPosition();
+     * <p>
+     *     Esta posición puede ser diferente a la posición anterior al inicio del arrastre porque el marcador aparece sobre el punto de contacto.
+     * </p>
+     *
+     * @param marker
+     */
     @Override
     public void onMarkerDragStart(Marker marker) {
 
     }
 
+    /**
+     * Se llama repetidamente mientras se arrastra un marcador.
+     * Se puede acceder a la ubicación del marcador a través de getPosition().
+     * @param marker
+     */
     @Override
     public void onMarkerDrag(Marker marker) {
 
     }
 
+    /**
+     *Se llama cuando un marcador ha terminado de ser arrastrado, puede accederse a la ubicacion del marcador a través de getPosition().
+     * @param marker
+     */
     @Override
     public void onMarkerDragEnd(Marker marker) {
         for (int id=0; id<adaptador.getItemCount(); id++){

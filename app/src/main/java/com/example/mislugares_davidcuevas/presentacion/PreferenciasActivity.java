@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 /**
  * Actividad que simplemente muestra {@link PreferenciasFragment}
+ * Devuelve el FragmentManager para interactuar con fragmentos asociados con la actividad de este fragmento.
  */
 public class PreferenciasActivity extends AppCompatActivity {
     @Override

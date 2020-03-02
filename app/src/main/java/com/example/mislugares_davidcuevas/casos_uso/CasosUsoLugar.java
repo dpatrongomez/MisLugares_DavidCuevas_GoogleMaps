@@ -133,6 +133,9 @@ public class CasosUsoLugar {
 
     /**
      * Actualiza posicion de lugar.
+     * <p>
+     *     Para ello nos ayudamos del metodo idPosicion de AdaptadorLugaresBD el cual mueve la posicion a la posicion actual del terminal
+     * </p>
      *
      * @param pos
      * @param lugar
@@ -177,7 +180,13 @@ public class CasosUsoLugar {
 
 
     /**
-     * Mostrara la ubicacion del lugar en google maps.
+     * Muestra la ubicacion del lugar en google maps.
+     * <p>
+     *     Muestra la posicion del lugar basandose en la Latitud y Longitud que contenga dicho lugar
+     * </p>
+     * <p>
+     *     Si el lugar no tiene posicion lo colocara en donde se encuentre el terminal en ese momento
+     * </p>
      * @param lugar
      */
     public void verMapa(Lugar lugar) {
@@ -191,6 +200,7 @@ public class CasosUsoLugar {
 
 
     /**
+     * Metodo que coloca una foto de la VistaLugarActivity y esta se actualiza si añadimos otra foto o la seleccionamos desde la galeria
      * @param pos
      * @param uri
      * @param imageView
@@ -349,6 +359,14 @@ public class CasosUsoLugar {
 
     }
 
+    /**
+     * Metodo que redirige al mapa al ser llamado desde VistaLugarActivity
+     * <p>
+     *     En el mapa solamente muestra la marca en el mapa mediante el id ya que este metodo es llamado en VistaLugarActivity para
+     *     mostrar en el mapa la ubicacion exacta del lugar sin que aparezcan los demas lugares ya que se limita al id que recoge de la clase
+     * </p>
+     * @param id
+     */
     public void mapa(int id) {
         Intent i = new Intent(actividad, MapsActivity.class);
         i.putExtra("_id", id);
