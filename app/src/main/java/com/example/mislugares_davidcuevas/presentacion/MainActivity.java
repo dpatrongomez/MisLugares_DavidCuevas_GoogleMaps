@@ -85,8 +85,10 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Toast.makeText(MainActivity.this,"Agregar un lugar en el mapa: ",Toast.LENGTH_SHORT).show();
                 Intent i = new Intent(MainActivity.this, MapsActivity.class);
                 startActivity(i);
+
             }
         });
 
