@@ -207,8 +207,7 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Método para lanzar el Activity de Preferencias
-     *
-     * @param view
+     *¡
      */
     public void LanzarPreferencias(){
         Intent i = new Intent(this, PreferenciasActivity.class);
@@ -226,7 +225,6 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Método para abrir un Diálogo para escribir el id del lugar que quieres visualizar
      *
-     * @param view
      */
     public void lanzarVistaLugar(){
         final EditText entrada = new EditText(this);

@@ -51,9 +51,9 @@ public class EdicionLugarActivity extends AppCompatActivity {
      * contiene el estado ya guardado de la actividad.
      * Si la actividad nunca ha existido, el valor del objeto Bundle es nulo.
      * <p>
-     * muestra la configuración básica de la actividad, como declarar
-     * la interfaz de usuario (definida en un archivo XML de diseño),
-     * definir las variables de miembro y configurar parte de la IU
+     *      Muestra la configuración básica de la actividad, como declarar
+     *      la interfaz de usuario (definida en un archivo XML de diseño),
+     *      definir las variables de miembro y configurar parte de la IU
      * </p>
      *
      * @param savedInstanceState objeto Bundle que contiene el estado de la actividad.
@@ -105,7 +105,7 @@ public class EdicionLugarActivity extends AppCompatActivity {
      * Método implementado para gestionar el recurso de menú (definido en XML)
      * hacia el Menu proporcionado en la devolución de llamada.
      * <p>
-     * Cuando comienza la actividad, para mostrar los elementos de la barra de app.
+     *      Cuando comienza la actividad, para mostrar los elementos de la barra de app.
      * </p>
      *
      * @param menu proporcionado en el XML para muestra los elementos de la barra.
