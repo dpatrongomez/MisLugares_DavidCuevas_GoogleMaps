@@ -1,12 +1,15 @@
 package com.example.mislugares_davidcuevas.presentacion;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -14,8 +17,10 @@ import com.example.mislugares_davidcuevas.R;
 import com.example.mislugares_davidcuevas.adaptadores.AdaptadorLugaresBD;
 import com.example.mislugares_davidcuevas.casos_uso.CasosUsoLugar;
 import com.example.mislugares_davidcuevas.datos.LugaresBD;
+import com.example.mislugares_davidcuevas.mapas.MapsActivity;
 import com.example.mislugares_davidcuevas.modelo.Lugar;
 import com.example.mislugares_davidcuevas.modelo.TipoLugar;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 
 /**
@@ -38,6 +43,7 @@ public class EdicionLugarActivity extends AppCompatActivity {
     private EditText nombre, direccion, telefono, url, comentario;
     private Spinner tipo;
     private int _id;
+    private MapsActivity mapsActivity;
 
 
     /**
@@ -62,6 +68,7 @@ public class EdicionLugarActivity extends AppCompatActivity {
         lugares = ((Aplicacion) getApplication()).lugares;
         usoLugar = new CasosUsoLugar(this, lugares, adaptador);
 
+        mapsActivity = new MapsActivity();
         Bundle extras = getIntent().getExtras();
         pos = extras.getInt("pos", -1);
         _id = extras.getInt("_id", -1);
@@ -123,15 +130,25 @@ public class EdicionLugarActivity extends AppCompatActivity {
                 finish();
                 return true;
             case R.id.guardar:
-                lugar.setNombre(nombre.getText().toString());
-                lugar.setTipo(TipoLugar.values()[tipo.getSelectedItemPosition()]);
-                lugar.setDireccion(direccion.getText().toString());
-                lugar.setTelefono(Integer.parseInt(telefono.getText().toString()));
-                lugar.setUrl(url.getText().toString());
-                lugar.setComentario(comentario.getText().toString());
-                if (_id==-1) _id = adaptador.idPosicion(pos);
-                usoLugar.guardar(_id, lugar);
-                finish();
+                if(nombre.getText().toString().matches("")){
+                    new AlertDialog.Builder(this)
+                            .setTitle("ERROR AL GUARDAR")
+                            .setMessage("Necesita introducir nombre del lugar para poder guardar")
+                            .setCancelable(false)
+                            .setNegativeButton("Confirmar", null)
+                            .show();
+                    if (_id!=-1) lugares.borrar(_id);
+                }else{
+                    lugar.setNombre(nombre.getText().toString());
+                    lugar.setTipo(TipoLugar.values()[tipo.getSelectedItemPosition()]);
+                    lugar.setDireccion(direccion.getText().toString());
+                    lugar.setTelefono(Integer.parseInt(telefono.getText().toString()));
+                    lugar.setUrl(url.getText().toString());
+                    lugar.setComentario(comentario.getText().toString());
+                    if (_id==-1) _id = adaptador.idPosicion(pos);
+                    usoLugar.guardar(_id, lugar);
+                    finish();
+                }
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

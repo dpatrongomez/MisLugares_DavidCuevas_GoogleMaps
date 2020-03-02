@@ -23,15 +23,31 @@ import static android.content.Context.LOCATION_SERVICE;
 
 /**
  * Clase para los permisos de localización
+ * LocationListener Se utiliza para recibir notificaciones del LocationManager cuando la ubicación ha cambiado.
+ * <p>
+ *     es el manejador de localizaciones de Android. Esta clase proporciona acceso a los servicios de ubicación del sistema.
+ *     Estos servicios permiten que las aplicaciones obtengan actualizaciones periódicas de la ubicación geográfica del dispositivo
+ *     o que activen una aplicación especificada  (con un intent) cuando el dispositivo entra en la proximidad de una ubicación geográfica determinada.
+ * </p>
  */
 public class CasoUsoLocalizacion implements LocationListener, ActivityCompat.OnRequestPermissionsResultCallback {
     private static final String TAG = "MisLugares";
     private Activity actividad;
     private int codigoPermiso;
     private LocationManager manejadorLoc;
+
+    /**
+     * Es una clase de datos que representa una ubicación geográfica.
+     * Una ubicación puede consistir en una latitud, longitud, time-stamp y otra información como rumbo (bearing)
+     * direccion geográfica (norte, sur, etc.), altitud y velocidad.
+     */
     private Location mejorLoc;
     private GeoPunto posicionActual;
     private AdaptadorLugares adaptador;
+
+    /**
+     * Tiempo en milisegundos.
+     */
     private static final long DOS_MINUTOS = 2 * 60 * 1000;
 
 
@@ -87,6 +103,18 @@ public class CasoUsoLocalizacion implements LocationListener, ActivityCompat.OnR
     /**
      * Método que genera un dialogo para pedir que se acepten los permisos de localización de la app
      *
+     * shouldShowRequestPermissionRationale
+     * <p>
+     *      Obtiene si debe mostrar la interfaz de usuario con justificación para solicitar un permiso.
+     *      Debe hacer esto solo si no tiene el permiso y el contexto en el que se solicita, no comunica claramente al usuario.
+     *</p>
+     *
+     * requestPermissions
+     * <p>
+     *      Este método puede iniciar una actividad que permita al usuario elegir qué permisos otorgar y cuáles rechazar.
+     *      Por lo tanto, debe estar preparado para que su actividad se detenga y se reanude.
+     *      Además, otorgar algunos permisos puede requerir un reinicio de su aplicación
+     *</p>
      * @param permiso
      * @param justificacion
      * @param requestCode
@@ -111,8 +139,12 @@ public class CasoUsoLocalizacion implements LocationListener, ActivityCompat.OnR
     }
 
     /**
-     * Concede el permiso a la localizacion e inicia los proveedores
-     * notifica al recycleView que los datos han sido cambiados
+     * Fuerza la búsqueda de una nueva localización, activa los proovedores,
+     * y comunica al adaptador que ha habido cambios en la localización actual.
+     * Esto lo usaremos para que actualice el Recyclerview con las nuevas distancias
+     * <p>
+     *     adaptador.notifyDataSetChanged();, actualiza los datos del adaptador
+     * </p>
      */
     public void permisoConcedido() {
         ultimaLocalizazion();
@@ -122,11 +154,21 @@ public class CasoUsoLocalizacion implements LocationListener, ActivityCompat.OnR
 
     /**
      * Método que activa los proveedores de GPS e Internet
+     * <p>
+     *      Activa tanto el proveedore GPS como el de telefonía.
+     *      Si el proveedor está disponible, pide actualizaciones cada 20  segundos para el GPS, diez segundos para el proveedor de red telefónica.
+     *      Sino hay permisos de localización, se solicitan.
+     * </p>
      */
     @SuppressLint("MissingPermission")
     private void activarProveedores() {
         if (hayPermisoLocalizacion()) {
             if (manejadorLoc.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+                /**
+                 * Al metodo manejadorLoc.requestLocationUpdates, le proporcionamos el proveedor de red o GPS ,
+                 * un tiempo de espera de 10 segundos para Network y 20 para GPS, la distancia mínima en metros, y un LocationListener para esperar la respuesta
+                 * en este caso nuestra propia clase CasoUsoLocalizacion es un LocationListener
+                 */
                 manejadorLoc.requestLocationUpdates(LocationManager.GPS_PROVIDER,
                         20 * 1000, 5, this);
             }
@@ -143,6 +185,13 @@ public class CasoUsoLocalizacion implements LocationListener, ActivityCompat.OnR
 
     /**
      * Método que actualiza la localización si el terminal se ha movido
+     *
+     * notifyDataSetChanged
+     * <p>
+     *     Este evento no especifica qué ha cambiado el conjunto de datos,
+     *     lo que obliga a los observadores a suponer que todos los elementos
+     *     y la estructura existentes pueden dejar de ser válidos
+     * </p>
      * @param location
      */
     @Override public void onLocationChanged(Location location) {
@@ -183,6 +232,10 @@ public class CasoUsoLocalizacion implements LocationListener, ActivityCompat.OnR
 
     /**
      * Método que actualiza a la mejor localización del terminal cada 2 minutos
+     * <p>
+     *     Actualiza la localizacion hacia una localización nueva si la precisión es menor que dos veces la precisión de la mejor localización que hemos obtenido anteriormente
+     *     y el tiempo de obtención  entre ambas localizaciones (timestamp) es mayor de dos minutos.
+     * </p>
      * @param localiz
      */
     private void actualizaMejorLocaliz(Location localiz) {
@@ -208,13 +261,19 @@ public class CasoUsoLocalizacion implements LocationListener, ActivityCompat.OnR
 
     /**
      * Método que borra las localizaciones para el ahorro de datos
+     *
+     * removeUpdates
+     * <p>
+     *     Elimina las actualizaciones de ubicación para lo especificado LocationListener.
+     *     Después de esta llamada, el oyente ya no recibirá actualizaciones de ubicación.
+     * </p>
      */
     public void desactivar() {
         if (hayPermisoLocalizacion()) manejadorLoc.removeUpdates(this);
     }
 
     /**
-     * Devuelve el resultado de pedir los permisos
+     * Devuelve si el permiso de localización es concedido
      * @param requestCode
      * @param permissions
      * @param grantResults

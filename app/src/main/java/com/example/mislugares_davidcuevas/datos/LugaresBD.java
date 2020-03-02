@@ -113,6 +113,13 @@ public class LugaresBD extends SQLiteOpenHelper implements RepositorioLugares {
 
     /**
      * Extrae el cursor.
+     * SharedPreferences
+     * <p>
+     *     Interfaz para acceder y modificar datos de preferencias devueltos por Context
+     *     Las modificaciones a las preferencias deben pasar por un Editor de objetod
+     *     para garantizar que los valores de preferencia permanezcan en un estado y control consistentes cuando se comprometan con el almacenamiento.
+     *     Los objetos que se devuelven de los distintos getmétodos deben ser tratados como inmutables por la aplicación.
+     * </p>
      * @return Cursor
      */
     public Cursor extraeCursor() {

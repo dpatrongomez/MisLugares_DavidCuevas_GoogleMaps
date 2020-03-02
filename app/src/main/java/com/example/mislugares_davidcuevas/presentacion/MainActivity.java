@@ -42,10 +42,10 @@ public class MainActivity extends AppCompatActivity {
     static final int RESULTADO_PREFERENCIAS = 0;
     private static final int SOLICITUD_PERMISO_LOCALIZACION = 1;
     private CasoUsoLocalizacion usoLocalizacion;
+    private int _id = -1;
 
     /**
      * Método para inicializar el layout, los listener y llenar las demás clases
-     *
      * @param savedInstanceState
      */
     @Override
@@ -85,26 +85,59 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                usoLugar.nuevo();
+                Intent i = new Intent(MainActivity.this, MapsActivity.class);
+                startActivity(i);
             }
         });
 
-
+        /**
+         * Nos permite identificar que gesto hemos realizado en la pantalla táctil.
+         * <p>
+         *     Sobre el vamos a sobreescribir el método onSingleTapUp y a devolver true.
+         *     Lo que conseguimos con esto es que el Listener sólo reaccione, cuando hagamos un tapup.
+         *     Hacemos click en la pantalla y levantamos el dedo.
+         * </p>
+         */
         final GestureDetector mGestureDetector = new GestureDetector(MainActivity.this,
                 new GestureDetector.SimpleOnGestureListener() {
                     @Override public boolean onSingleTapUp(MotionEvent e) {
                         return true;
                     }
                 });
+
+        /**
+         * Permite que la aplicación intercepte eventos táctiles en progreso en el nivel de la jerarquía de vistas de RecyclerView
+         * antes de que esos eventos táctiles sean considerados para el propio comportamiento de desplazamiento de RecyclerView
+         * <p>
+         *     Puede ser útil para aplicaciones que desean implementar diversas formas de manipulación gestual de vistas de elementos dentro de RecyclerView.
+         *     OnItemTouchListeners puede interceptar una interacción táctil que ya está en progreso
+         * </p>
+         */
         recyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
             @Override
             public void onRequestDisallowInterceptTouchEvent(boolean b) {
 
             }
 
+            /**
+             * Se usa para controlar que hacemos click, Tapup sobre la lista
+             * <p>
+             *     con el, obtenemos en child el item que queremos capturar a partir de la posición X e Y del motionEvent.
+             *     Esta clase se utiliza para informar de eventos de movimiento (mouse, bolígrafo, dedo...).
+             *     Los eventos de movimiento pueden contener movimientos absolutos o relativos y otros datos, según el tipo de dispositivo.
+             * </p>
+             * @param recyclerView
+             * @param motionEvent
+             * @return verdadero o falso
+             */
             @Override
             public boolean onInterceptTouchEvent(RecyclerView recyclerView, MotionEvent motionEvent) {
                 try {
+
+                    /**
+                     * Encuentra la primera vista, ítem de la lista justo debajo del punto dado.
+                     * Cada Item de la lista se muestra como un ViewHolder, es una vista en sí (elementolista.xml)
+                     */
                     View child = recyclerView.findChildViewUnder(motionEvent.getX(), motionEvent.getY());
 
                     if (child != null && mGestureDetector.onTouchEvent(motionEvent)) {
@@ -221,6 +254,12 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Método para inicializar la ReciclerView con su respectiva layout y adaptador
+     * Ajustamos el tamaño a fijo
+     * recyclerView.setHasFixedSize(true);
+     * Ponemos de LayoutManager un Linear
+     * recyclerView.setLayoutManager(new LinearLayoutManager(this));
+     * Y cargamos el adaptador que vamos a definir.
+     * recyclerView.setAdapter(adaptador);
      */
     public void inicializarReciclerView() {
         recyclerView = findViewById(R.id.recycler_view);

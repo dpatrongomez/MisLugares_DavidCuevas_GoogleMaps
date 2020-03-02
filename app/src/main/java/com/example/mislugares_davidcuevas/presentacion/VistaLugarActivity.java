@@ -27,6 +27,7 @@ import com.example.mislugares_davidcuevas.casos_uso.CasoUsoAlmacenamiento;
 import com.example.mislugares_davidcuevas.casos_uso.CasosUsoLugar;
 import com.example.mislugares_davidcuevas.datos.LugaresBD;
 import com.example.mislugares_davidcuevas.modelo.Lugar;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.text.DateFormat;
 import java.util.Calendar;
@@ -88,9 +89,9 @@ public class VistaLugarActivity extends AppCompatActivity {
      * contiene el estado ya guardado de la actividad.
      * Si la actividad nunca ha existido, el valor del objeto Bundle es nulo.
      * <p>
-     * muestra la configuración básica de la actividad, como declarar
-     * la interfaz de usuario (definida en un archivo XML de diseño),
-     * definir las variables de miembro y configurar parte de la IU
+     *      muestra la configuración básica de la actividad, como declarar
+     *      la interfaz de usuario (definida en un archivo XML de diseño),
+     *      definir las variables de miembro y configurar parte de la IU
      * </p>
      *
      * @param savedInstanceState objeto Bundle que contiene el estado de la actividad.
@@ -135,13 +136,20 @@ public class VistaLugarActivity extends AppCompatActivity {
             TextView telefono = findViewById(R.id.telefono);
             telefono.setText(Integer.toString(lugar.getTelefono()));
         }
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_Loc);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                usoLugar.mapa(pos);
+            }
+        });
     }
 
     /**
      * Método implementado para gestionar el recurso de menú (definido en XML)
      * hacia el Menu proporcionado en la devolución de llamada.
      * <p>
-     * Cuando comienza la actividad, para mostrar los elementos de la barra de app.
+     *      Cuando comienza la actividad, para mostrar los elementos de la barra de app.
      * </p>
      *
      * @param menu proporcionado en el XML para muestra los elementos de la barra.
@@ -393,77 +401,69 @@ public class VistaLugarActivity extends AppCompatActivity {
      * Obtenemos la fecha con un cuadro de diálogo es un tipo de ventana emergente
      * que solicita al usuario de la aplicación.
      * <p>
-     * Permite modificar el año, el mes y el día.
-     * Mediante DatePickerDialog seleccionamos la fecha en milisegundos con un objeto de tipo Long.
-     * Finalmente, mostramos el diálogo llamando al método show(). Este método utiliza dos parámetros:
-     * el manejador de fragments y una etiqueta que identificará el cuadro de diálogo.
+     *      Permite modificar el año, el mes y el día.
+     *      Mediante DatePickerDialog seleccionamos la fecha en milisegundos con un objeto de tipo Long.
+     *      Finalmente, mostramos el diálogo llamando al método show(). Este método utiliza dos parámetros:
+     *      el manejador de fragments y una etiqueta que identificará el cuadro de diálogo.
      * </p>
      */
     public void obtenerFecha(){
         DatePickerDialog recogerFecha = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+            Calendar cal = Calendar.getInstance();
 
+            cal.setTimeInMillis(lugar.getFecha());
 
-                Calendar cal = Calendar.getInstance();
+            cal.set(Calendar.YEAR, year);
+            cal.set(Calendar.MONTH, month);
+            cal.set(Calendar.DAY_OF_MONTH, dayOfMonth);
 
-                cal.setTimeInMillis(lugar.getFecha());
+            lugar.setFecha(cal.getTimeInMillis());
 
-                cal.set(Calendar.YEAR, year);
-                cal.set(Calendar.MONTH, month);
-                cal.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-
-                lugar.setFecha(cal.getTimeInMillis());
-
-                usoLugar.actualizaPosLugar(pos, lugar);
-                txtFecha.setText(DateFormat.getDateInstance()
-                        .format(new Date(cal.getTimeInMillis())));
-                anio = year;
-                mes = month;
-                dia = dayOfMonth;
-
-
+            usoLugar.actualizaPosLugar(pos, lugar);
+            txtFecha.setText(DateFormat.getDateInstance()
+                    .format(new Date(cal.getTimeInMillis())));
+            anio = year;
+            mes = month;
+            dia = dayOfMonth;
             }
         },anio, mes, dia);
 
         recogerFecha.getDatePicker();
         recogerFecha.show();
-
     }
 
     /**
      * Obtenemos la hora y los minutos con un cuadro de diálogo es un tipo de ventana emergente
      * que solicita al usuario de la aplicación.
      * <p>
-     * Permite modificar la hora y los minutos.
-     * Mediante TimePickerDialog seleccionamos la hora en milisegundos con un objeto de tipo Long.
-     * Finalmente, mostramos el diálogo llamando al método show(). Este método utiliza dos parámetros:
-     * el manejador de fragments y una etiqueta que identificará el cuadro de diálogo.
+     *      Permite modificar la hora y los minutos.
+     *      Mediante TimePickerDialog seleccionamos la hora en milisegundos con un objeto de tipo Long.
+     *      Finalmente, mostramos el diálogo llamando al método show(). Este método utiliza dos parámetros:
+     *      el manejador de fragments y una etiqueta que identificará el cuadro de diálogo.
      * </p>
      */
     public void obtenerHora(){
         final TimePickerDialog recogerHora = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+            Calendar calendario = Calendar.getInstance();
+            calendario.setTimeInMillis(lugar.getFecha());
+            calendario.set(Calendar.HOUR_OF_DAY, hourOfDay);
+            calendario.set(Calendar.MINUTE, minute);
+            lugar.setFecha(calendario.getTimeInMillis());
+            usoLugar.actualizaPosLugar(pos, lugar);
 
-
-                Calendar calendario = Calendar.getInstance();
-                calendario.setTimeInMillis(lugar.getFecha());
-                calendario.set(Calendar.HOUR_OF_DAY, hourOfDay);
-                calendario.set(Calendar.MINUTE, minute);
-                lugar.setFecha(calendario.getTimeInMillis());
-                usoLugar.actualizaPosLugar(pos, lugar);
-
-                txtHora.setText(DateFormat.getTimeInstance().format(
-                        new Date(calendario.getTimeInMillis())));
-                hora = hourOfDay;
-                minuto = minute;
+            txtHora.setText(DateFormat.getTimeInstance().format(
+                    new Date(calendario.getTimeInMillis())));
+            hora = hourOfDay;
+            minuto = minute;
 
             }
 
         }, hora, minuto, true);
         recogerHora.show();
-
     }
 
 }

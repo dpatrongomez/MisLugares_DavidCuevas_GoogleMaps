@@ -12,7 +12,13 @@ import androidx.fragment.app.Fragment;
 
 
 /**
- * Clase para los distintos permisos de almacenamiento como pueden ser de escritura como de lecutra
+ * Clase que va a encargarse de los distintos permisos de almacenamiento
+ * <p>
+ *      Estos son los permisos de escritura y de lectura para poder guardar archivos desde la app en el movil
+ *      o para ver los archivos que necesite una operacion que este realizando la aplicacion
+ * </p>
+ * En esta clase, vamos a controlar la peticion de los dichos permisos.
+ * @see androidx.core.app.ActivityCompat.OnRequestPermissionsResultCallback
  */
 public class CasoUsoAlmacenamiento implements ActivityCompat.OnRequestPermissionsResultCallback {
 
@@ -24,6 +30,11 @@ public class CasoUsoAlmacenamiento implements ActivityCompat.OnRequestPermission
 
     /**
      * Constructor para solicitar permisos de lectura y escritura
+     * <p>
+     *     Solicitamos los permisos llamando al método solicitar permisos.
+     *     Eso quiere decir que cuando la clase casoUsoAlmacenamiento se instancia,
+     *     lo primero que hará es solicitar los permisos para lectura y escritura en almacenamiento externo.
+     * </p>
      * @param actividad
      * @param codigoPermiso
      */
@@ -39,6 +50,16 @@ public class CasoUsoAlmacenamiento implements ActivityCompat.OnRequestPermission
 
     /**
      * Método que genera un dialogo para pedir que se acepten los permisos de almacenamiento de la app
+     * El método shouldShowRequestPermissionRationale:
+     * <p>
+     *     Si este metodo devolviese verdadero,
+     *     quiere decir que al usuario nunca le ha solicitado el permiso la aplicación,
+     *     o se le ha solicitado pero ha indicado que se pregunte cada vez acerca del permiso.
+     * </p>
+     * <p>
+     *      Si este metodo devolviese falso, significa que ya se ha solicitado y el usuario ha contestado que no se vuelva a preguntar.
+     *      En este caso, se le debería indicar al usuario que debe dar los permisos manualmente
+     * </p>
      *
      * @param permiso
      * @param justificacion
@@ -62,7 +83,17 @@ public class CasoUsoAlmacenamiento implements ActivityCompat.OnRequestPermission
     }
 
     /**
-     * Solicitar permiso fragment.
+     * Método que genera un dialogo para pedir que se acepten los permisos de almacenamiento de la app
+     * El método shouldShowRequestPermissionRationale:
+     *<p>
+     *     Si este metodo devolviese verdadero,
+     *     quiere decir que al usuario nunca le ha solicitado el permiso la aplicación,
+     *     o se le ha solicitado pero ha indicado que se pregunte cada vez acerca del permiso.
+     *</p>
+     *<p>
+     *      Si este metodo devolviese falso, significa que ya se ha solicitado y el usuario ha contestado que no se vuelva a preguntar.
+     *      En este caso, se le debería indicar al usuario que debe dar los permisos manualmente
+     * </p>
      *
      * @param permiso
      * @param justificacion
@@ -87,7 +118,9 @@ public class CasoUsoAlmacenamiento implements ActivityCompat.OnRequestPermission
 
 
     /**
-     * Método que si devuelve true significa que la app tiene permisos de lectura concedidos
+     * Metodo que si devuelve true significa que la app tiene permisos de lectura concedidos
+     * READ_EXTERNAL_STORAGE: este permiso lo solicitamos para hacer fotografias.
+     * Con el metodo de activityCompact requestPermissions solicitamos los permisos que necesitamos.
      *
      * @return true o false
      */
@@ -99,7 +132,9 @@ public class CasoUsoAlmacenamiento implements ActivityCompat.OnRequestPermission
 
 
     /**
-     * Método que si devuelve true significa que la app tiene permisos de escritura concedidos
+     * Metodo que si devuelve true significa que la app tiene permisos de escritura concedidos
+     * WRITE_EXTERNAL_STORAGE: este permiso lo solicitamos para escribir en almacenamiento, hacer una foto y almacenarla en un content provider.
+     * Con el metodo de activityCompact requestPermissions solicitamos los permisos que necesitamos.
      *
      * @return true o false
      */
@@ -110,7 +145,13 @@ public class CasoUsoAlmacenamiento implements ActivityCompat.OnRequestPermission
     }
 
     /**
-     * Devuelve el resultado de pedir los permisos
+     * Funciona muy parecido a startActivityForResult, en el sentido de que mandamos un requestcode,
+     * y en la respuesta podemos comprobar si los permisos han sido efectivamente concedidos.
+     *<p>
+     *     Dspues de solicitar un permiso se llama a este método en el que se puede comprobar si el
+     *     permiso en cuestion ha sido solicidado o no
+     *</p>
+     *
      * @param requestCode
      * @param permissions
      * @param grantResults

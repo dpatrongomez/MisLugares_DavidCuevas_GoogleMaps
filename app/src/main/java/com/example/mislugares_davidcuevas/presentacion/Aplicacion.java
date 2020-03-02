@@ -21,7 +21,7 @@ public class Aplicacion extends Application {
     public LugaresBD lugares;
 
     /**
-     * El adaptador para enlazar los datos en el RecyclerView.
+     * Metodo para poder recuperar nuestro adaptador desde cualquier parte de la aplicación.
      */
     public AdaptadorLugaresBD adaptador;
 

@@ -19,6 +19,7 @@ import androidx.core.content.FileProvider;
 
 import com.example.mislugares_davidcuevas.adaptadores.AdaptadorLugaresBD;
 import com.example.mislugares_davidcuevas.datos.LugaresBD;
+import com.example.mislugares_davidcuevas.mapas.MapsActivity;
 import com.example.mislugares_davidcuevas.modelo.GeoPunto;
 import com.example.mislugares_davidcuevas.modelo.Lugar;
 import com.example.mislugares_davidcuevas.presentacion.Aplicacion;
@@ -205,8 +206,7 @@ public class CasosUsoLugar {
     /**
      * Metodo que abre la galeria del telefono para seleccionar una imagen y la URI es enviada
      * a traves de un intent
-     * @param view View Vista
-     * @param RES int Resultado de la operacion
+     * @param view
      */
     public void galeria(View view) {
         String action;
@@ -269,7 +269,13 @@ public class CasosUsoLugar {
     }
 
     /**
-     * Reducir MB de la foto
+     * Decodificar mapas de bits grandes sin exceder el límite de memoria por aplicación al subir una versión de submuestreo más pequeña a la memoria.
+     * <p>
+     *     Al establecer la propiedad inJustDecodeBounds en true durante la decodificación, se evita la asignación de memoria,
+     *     con lo cual se muestra null para el objeto de mapa de bits, pero se establecen outWidth, outHeight y outMimeType.
+     *     Esta técnica permite leer las dimensiones y el tipo de los datos de la imagen antes de la construcción (y la asignación de memoria) del mapa de bits.
+     * </p>
+     *
      * @param contexto
      * @param uri
      * @param maxAncho
@@ -322,4 +328,30 @@ public class CasosUsoLugar {
         actividad.startActivity(i);
     }
 
+    /**
+     * Sobre carga del metodo que crea un nuevo lugar
+     * <p>
+     *     Este metodo permite crear un nuevo lugar a raiz de añadir una marca en el mapa,
+     *     de esta manera guarda la posicion de la marca en relacion al nuevo id del lugar
+     * </p>
+     * @param posicion
+     */
+    public void nuevo(GeoPunto posicion) {
+        int id = lugares.nuevo();
+        if (!posicion.equals(GeoPunto.SIN_POSICION)) {
+            Lugar lugar = lugares.elemento(id);
+            lugar.setPosicion(posicion);
+            lugares.actualiza(id, lugar);
+        }
+        Intent i = new Intent(actividad, EdicionLugarActivity.class);
+        i.putExtra("_id", id);
+        actividad.startActivity(i);
+
+    }
+
+    public void mapa(int id) {
+        Intent i = new Intent(actividad, MapsActivity.class);
+        i.putExtra("_id", id);
+        actividad.startActivity(i);
+    }
 }
