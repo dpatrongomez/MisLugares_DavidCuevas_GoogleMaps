@@ -40,7 +40,6 @@ public class AdaptadorLugaresBD extends AdaptadorLugares  {
      * Devuelve el lugar a partir de la posición
      *
      * @param posicion
-     * @return lugar
      */
     public Lugar lugarPosicion(int posicion) {
         cursor.moveToPosition(posicion);

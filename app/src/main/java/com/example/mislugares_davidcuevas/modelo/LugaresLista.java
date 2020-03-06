@@ -17,7 +17,6 @@ public class LugaresLista implements RepositorioLugares {
     public LugaresLista() {
         listaLugares = new ArrayList<Lugar>();
         aniadeEjemplos();
-
     }
 
     /**

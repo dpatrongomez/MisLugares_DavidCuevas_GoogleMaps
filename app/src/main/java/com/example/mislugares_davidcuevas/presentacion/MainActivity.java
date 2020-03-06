@@ -309,16 +309,21 @@ public class MainActivity extends AppCompatActivity {
     /**
      * Resultado específico cuando el usuario termina con la actividad subsiguiente y regresa a la actividad
      *
-     * @param requestCode <p>ódigo de petición especificada por la segunda actividad
-     *                     (se trata de RESULTADO_EDITAR si el usuario selecciona la edición del lugar,
-     *                      RESULTADO_GALERIAS si el usuario importa nuevas fotos de su galeria y RESULTADO_FOTO
-     *                      si el usuario realiza una foto con los permisos de la app)</p>
+     * @param requestCode <p>
+     *                          codigo de petición especificada por la segunda actividad
+     *                          (se trata de RESULTADO_EDITAR si el usuario selecciona la edición del lugar,
+ *                              RESULTADO_GALERIAS si el usuario importa nuevas fotos de su galeria y RESULTADO_FOTO
+     *                          si el usuario realiza una foto con los permisos de la app)
+     *                    </p>
      *
-     * @param resultCode  <p>código de resultado especificado por la segunda actividad
-     *                    (se trata de RESULT_OK si se realizó la operación de manera correcta</p>
-     *                     o de RESULT_CANCELED si se retiró el usuario o falló la operación por algún motivo)
-     *
-     * @param data        <p>Intent que proporciona los datos del resultado</p>
+     * @param resultCode  <p>
+     *                          codigo de resultado especificado por la segunda actividad
+     *                          (se trata de RESULT_OK si se realizó la operación de manera correcta
+     *                           o de RESULT_CANCELED si se retiró el usuario o falló la operación por algún motivo)
+     *                    </p>
+     * @param data        <p>
+     *                          Intent que proporciona los datos del resultado
+ *                        </p>
      */
     @Override protected void onActivityResult(int requestCode, int resultCode,
                                               Intent data) {
